@@ -1,16 +1,10 @@
 name: Daily Fair Update
 
-# WHEN this workflow runs:
 on:
   schedule:
-    # Runs every day at 06:00 UTC.
-    # Cron format is: minute hour day month weekday
     - cron: '0 6 * * *'
-  # This lets you also trigger it manually from the "Actions" tab on GitHub,
-  # which is great for testing before you trust the daily schedule.
   workflow_dispatch:
 
-# Gives the workflow permission to push changes back into the repo
 permissions:
   contents: write
 
@@ -18,26 +12,27 @@ jobs:
   update-data:
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Download a copy of your repo's code onto the robot's computer
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      # Step 2: Install Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      # Step 3: Install the Python libraries our scraper needs
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # Step 4: Run the actual scraper script
+      # NEW STEP: Playwright needs an actual browser binary installed
+      # on the runner (it doesn't use your normal Chrome/Firefox).
+      # --with-deps also installs the system libraries Chromium needs
+      # to run on a bare Ubuntu machine.
+      - name: Install Playwright browser
+        run: playwright install --with-deps chromium
+
       - name: Run scraper
         run: python scraper.py
 
-      # Step 5: If the data changed, commit and push it back to the repo.
-      # If nothing changed, this step just does nothing (no empty commits).
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
