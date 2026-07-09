@@ -1,4 +1,11 @@
 {
-  "last_updated": null,
-  "fairs": []
-}"Move fairs.json into data folder"
+  "last_updated": "2026-07-09T20:21:38.686112+00:00",
+  "fairs": [
+    {
+      "name": "Example China Trade Fair",
+      "dates": "2026-08-10 to 2026-08-12",
+      "city": "Shanghai",
+      "category": "Example category"
+    }
+  ]
+}
