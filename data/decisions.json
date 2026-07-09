@@ -1,0 +1,7 @@
+{
+  "_instructions": "Key each entry by the fair's 'url' (safest, since names can repeat) or its exact 'name'. decision must be one of: go, skip, maybe. note is optional.",
+  "https://expolume.com/expo/example-fair/": {
+    "decision": "go",
+    "note": "Matches our packaging category, good exhibitor overlap with last year"
+  }
+}
