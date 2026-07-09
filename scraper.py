@@ -136,8 +136,21 @@ def scrape_fairs(url):
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page()
-        page.goto(url, wait_until="networkidle", timeout=60000)
-        page.wait_for_timeout(2000)  # let the filter JS finish applying
+        # "networkidle" times out on sites with background network chatter
+        # (analytics, chat widgets, etc.) that never fully goes quiet.
+        # "domcontentloaded" just waits for the HTML to be parsed, which is
+        # enough here since we then explicitly wait for real content below.
+        page.goto(url, wait_until="domcontentloaded", timeout=60000)
+
+        # Wait specifically for at least one fair link to appear, rather
+        # than an arbitrary fixed delay. If none show up within 20s, we
+        # still continue so the debug snippet below can tell us why.
+        try:
+            page.wait_for_selector('a[href*="/expo/"]', timeout=20000)
+        except Exception:
+            pass
+
+        page.wait_for_timeout(2000)  # small buffer for filter JS to settle
         load_all_results(page)
         fairs = extract_fairs(page)
 
