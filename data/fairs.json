@@ -1,11 +1,6 @@
 {
-  "last_updated": "2026-07-09T20:21:38.686112+00:00",
-  "fairs": [
-    {
-      "name": "Example China Trade Fair",
-      "dates": "2026-08-10 to 2026-08-12",
-      "city": "Shanghai",
-      "category": "Example category"
-    }
-  ]
+  "last_updated": "2026-07-09T20:46:44.795181+00:00",
+  "target_month": "2026-08",
+  "source_url": "https://expolume.com/expo/?type=expo&regions=china&recurring-date=2026-08-01..2026-08-31&sort=latest",
+  "fairs": []
 }
