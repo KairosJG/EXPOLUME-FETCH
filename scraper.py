@@ -1,41 +1,38 @@
 """
-Real Expolume scraper.
+Real Expolume scraper (v3).
 
-Uses Playwright (a headless browser) instead of plain requests, because
-Expolume's region/date filters are applied by JavaScript in the browser,
-not by the server reading the URL. A plain "download the HTML" approach
-would silently ignore our filters and return the default unfiltered list.
+This calls the exact search endpoint the site's own filter panel uses,
+found by inspecting the Network tab while manually applying filters in a
+browser. This is far more reliable than clicking through their UI:
+- No date-picker or checkbox automation to break if their design changes.
+- No "Load more" button clicking.
+- No ad overlays blocking clicks.
 
-WHAT THIS SCRIPT DOES:
-1. Works out the target month (see get_target_month() below).
-2. Builds the filtered Expolume URL for China fairs in that month.
-3. Opens that URL in a headless Chromium browser.
-4. Clicks "Load more" repeatedly until all results for that month are loaded.
-5. Extracts each fair's name, real link, dates, and venue.
-6. Saves everything to data/fairs.json.
-
-NOTE FOR NEXT ITERATION:
-I couldn't test this against the live site from my own environment (no
-internet access there), so this is a best-effort first pass based on how
-the page is structured. If it comes back empty or wrong when you run it,
-send me the log output (the workflow prints a debug snippet in that case)
-and we'll adjust the extraction logic together.
+The only requirement is a valid Cloudflare "clearance" cookie, which we get
+by first loading the normal page once in a real browser (letting Cloudflare's
+JS challenge pass), then reusing that same authenticated browser session to
+call the search endpoint directly with our own region/date parameters.
 """
 
 import calendar
 import json
 import re
+import urllib.parse
 from datetime import datetime, timezone
 
+from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
 
-BASE_URL = "https://expolume.com/expo/"
+SEARCH_ENDPOINT = "https://expolume.com/"
+WARMUP_URL = "https://expolume.com/expo/"
+
+DATE_PATTERN = re.compile(
+    r"([A-Z][a-z]{2} \d{1,2}, \d{4})\s*To\s*([A-Z][a-z]{2} \d{1,2}, \d{4})"
+)
 
 
 def get_target_month():
     """
-    Decides which month to scrape.
-
     Default: NEXT calendar month (since the whole point is to have next
     month's shortlist ready before the current month ends). Change this
     function if you'd rather target the current month instead.
@@ -46,137 +43,127 @@ def get_target_month():
     return year, month
 
 
-def build_url(year, month):
+def build_search_url(year, month, limit=200):
     last_day = calendar.monthrange(year, month)[1]
     start = f"{year}-{month:02d}-01"
     end = f"{year}-{month:02d}-{last_day}"
-    return (
-        f"{BASE_URL}?type=expo&regions=china"
-        f"&recurring-date={start}..{end}&sort=latest"
-    )
+    params = {
+        "vx": "1",
+        "action": "search_posts",
+        "type": "expo",
+        "keywords": "",
+        "industries": "",
+        "regions": "china",
+        "relations": "",
+        "recurring-date": f"{start}..{end}",
+        "sort": "latest",
+        "limit": str(limit),
+        "__template_id": "65809",
+        "__get_total_count": "1",
+    }
+    return SEARCH_ENDPOINT + "?" + urllib.parse.urlencode(params)
 
 
-def load_all_results(page, max_clicks=50):
-    """Keep clicking "Load more" until it's gone or stops appearing."""
-    for _ in range(max_clicks):
-        load_more = page.get_by_text("Load more", exact=True)
-        if load_more.count() == 0:
-            break
-        try:
-            if not load_more.first.is_visible():
-                break
-            load_more.first.click()
-            page.wait_for_timeout(1200)
-        except Exception:
-            break
-
-
-DATE_PATTERN = re.compile(
-    r"([A-Z][a-z]{2} \d{1,2}, \d{4})\s*To\s*([A-Z][a-z]{2} \d{1,2}, \d{4})"
-)
-
-
-def extract_fairs(page):
+def extract_fairs_from_html(html):
     """
-    Pulls every link that points to an individual fair page (/expo/<slug>/),
-    then looks at the surrounding text for dates and venue. This avoids
-    depending on exact CSS class names, which can change without notice.
+    Parses the HTML fragment the search endpoint returns. Same
+    ancestor-climbing approach as before (look for a parent whose text
+    contains a date range), just done with BeautifulSoup instead of a
+    live page, since we now have raw HTML rather than a browser page.
     """
-    raw = page.evaluate(
-        """
-        () => {
-            const results = [];
-            const seen = new Set();
-            const links = Array.from(document.querySelectorAll('a[href*="/expo/"]'));
-            for (const link of links) {
-                const href = link.href;
-                if (href.replace(/\\/$/, '') === 'https://expolume.com/expo') continue;
-                const title = link.textContent.trim();
-                if (!title || seen.has(href)) continue;
-                seen.add(href);
-                const container = link.closest('article') || link.parentElement;
-                results.push({
-                    title: title,
-                    url: href,
-                    context: container ? container.innerText : ''
-                });
-            }
-            return results;
-        }
-        """
-    )
-
+    soup = BeautifulSoup(html, "html.parser")
     fairs = []
-    for item in raw:
-        match = DATE_PATTERN.search(item["context"])
-        dates = f'{match.group(1)} To {match.group(2)}' if match else None
+    seen = set()
 
-        # Venue: try the line right after the date line in the context text
+    for link in soup.select('a[href*="/expo/"]'):
+        href = link.get("href", "")
+        if not href or href.rstrip("/") == "https://expolume.com/expo":
+            continue
+        title = link.get_text(strip=True)
+        if not title or href in seen:
+            continue
+        seen.add(href)
+
+        context = ""
+        node = link.parent
+        for _ in range(6):
+            if node is None:
+                break
+            text = node.get_text("\n", strip=True)
+            if DATE_PATTERN.search(text):
+                context = text
+                break
+            node = node.parent
+        if not context and link.parent:
+            context = link.parent.get_text("\n", strip=True)
+
+        match = DATE_PATTERN.search(context)
+        dates = f"{match.group(1)} To {match.group(2)}" if match else None
+
         venue = None
         if match:
-            lines = [l.strip() for l in item["context"].split("\n") if l.strip()]
+            lines = [l.strip() for l in context.split("\n") if l.strip()]
             for i, line in enumerate(lines):
                 if match.group(1) in line:
                     if i + 1 < len(lines):
                         venue = lines[i + 1]
                     break
 
-        fairs.append(
-            {
-                "name": item["title"],
-                "url": item["url"],
-                "dates": dates,
-                "venue": venue,
-            }
-        )
+        fairs.append({"name": title, "url": href, "dates": dates, "venue": venue})
+
     return fairs
 
 
-def scrape_fairs(url):
-    with sync_playwright() as p:
-        browser = p.chromium.launch()
-        page = browser.new_page()
-        page.goto(url, wait_until="domcontentloaded", timeout=60000)
+def fetch_html(year, month):
+    search_url = build_search_url(year, month)
 
-        # Expolume is behind Cloudflare's bot protection, which sometimes
-        # shows a brief "Just a moment..." interstitial before letting a
-        # normal browser through. Give it a little time to clear on its
-        # own rather than treating it as an immediate failure.
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=False, slow_mo=100)
+        context = browser.new_context()
+        page = context.new_page()
+
+        # Step 1: visit the normal page once so Cloudflare's challenge
+        # gets solved and the browser context holds a valid clearance
+        # cookie for everything that follows.
+        page.goto(WARMUP_URL, wait_until="domcontentloaded", timeout=60000)
         for _ in range(10):
             if "Just a moment" not in page.title():
                 break
             page.wait_for_timeout(2000)
+        page.wait_for_timeout(1500)
 
-        try:
-            page.wait_for_selector('a[href*="/expo/"]', timeout=20000)
-        except Exception:
-            pass
-
-        page.wait_for_timeout(2000)
-        load_all_results(page)
-        fairs = extract_fairs(page)
-
-        if not fairs:
-            # Debug aid: print a snippet of the page so we can see what
-            # actually loaded, in case the extraction logic needs fixing.
-            print("No fairs extracted. Page title was:", page.title())
-            print("Body snippet:", page.inner_text("body")[:1000])
+        # Step 2: call the search endpoint directly, using the same
+        # authenticated context (shares cookies with the page above).
+        response = context.request.get(
+            search_url,
+            headers={
+                "X-Requested-With": "XMLHttpRequest",
+                "Referer": WARMUP_URL,
+                "Accept": "*/*",
+            },
+        )
+        html = response.text()
 
         browser.close()
-        return fairs
+        return html, search_url
 
 
 def main():
     year, month = get_target_month()
-    url = build_url(year, month)
-    print(f"Scraping: {url}")
+    print(f"Requesting China fairs for {year}-{month:02d}")
 
-    fairs = scrape_fairs(url)
+    html, search_url = fetch_html(year, month)
+    fairs = extract_fairs_from_html(html)
+    print(f"Found {len(fairs)} fairs")
+
+    if not fairs:
+        print("No fairs extracted. Raw response snippet:")
+        print(html[:1500])
 
     data = {
         "last_updated": datetime.now(timezone.utc).isoformat(),
         "target_month": f"{year}-{month:02d}",
-        "source_url": url,
+        "source_url": search_url,
         "fairs": fairs,
     }
 

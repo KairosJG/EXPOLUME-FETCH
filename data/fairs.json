@@ -1,6 +1,901 @@
 {
-  "last_updated": "2026-07-09T21:19:16.784649+00:00",
+  "last_updated": "2026-07-10T13:16:39.099050+00:00",
   "target_month": "2026-08",
-  "source_url": "https://expolume.com/expo/?type=expo&regions=china&recurring-date=2026-08-01..2026-08-31&sort=latest",
-  "fairs": []
+  "source_url": "https://expolume.com/?vx=1&action=search_posts&type=expo&keywords=&industries=&regions=china&relations=&recurring-date=2026-08-01..2026-08-31&sort=latest&limit=200&__template_id=65809&__get_total_count=1",
+  "fairs": [
+    {
+      "name": "Northwest China Agricultural Materials Trade Fair 2026",
+      "url": "https://expolume.com/expo/northwest-china-agricultural-materials-trade-fair/",
+      "dates": "Jul 30, 2026 To Jul 31, 2026",
+      "venue": "Xian International Convention and Exhibition Center"
+    },
+    {
+      "name": "Nanning Hongwei World Pet Expo 2026",
+      "url": "https://expolume.com/expo/nanning-hongwei-world-pet-expo/",
+      "dates": "Jul 31, 2026 To Aug 2, 2026",
+      "venue": "Nanning International Convention and Exhibition Center (NICEC)"
+    },
+    {
+      "name": "Chengdu Century Home Expo 2026",
+      "url": "https://expolume.com/expo/chengdu-century-home-expo/",
+      "dates": "Jul 31, 2026 To Aug 2, 2026",
+      "venue": "Western China International Expo Center"
+    },
+    {
+      "name": "China Digital Interactive Entertainment Expo and Conference (ChinaJoy)",
+      "url": "https://expolume.com/expo/chinajoy/",
+      "dates": "Jul 31, 2026 To Aug 3, 2026",
+      "venue": "Shanghai New International Expo Center"
+    },
+    {
+      "name": "Kunming Huaxia Home Expo 2026",
+      "url": "https://expolume.com/expo/kunming-huaxia-home-expo/",
+      "dates": "Jul 31, 2026 To Aug 2, 2026",
+      "venue": "Kunming International Convention and Exhibition Center"
+    },
+    {
+      "name": "Qingdao International Jewelry and Jade Fair and Cultural Expo 2026",
+      "url": "https://expolume.com/expo/qingdao-international-jewelry-and-jade-fair-and-cultural-expo/",
+      "dates": "Jul 31, 2026 To Aug 3, 2026",
+      "venue": "Qingdao International Convention Center"
+    },
+    {
+      "name": "Hangzhou Global New E-Commerce Expo 2026",
+      "url": "https://expolume.com/expo/global-new-e-commerce-expo/",
+      "dates": "Aug 1, 2026 To Aug 2, 2026",
+      "venue": "Hangzhou International Expo Center"
+    },
+    {
+      "name": "China International Hair Fair (CIHF) 2026",
+      "url": "https://expolume.com/expo/china-international-hair-fair-cihf/",
+      "dates": "Aug 1, 2026 To Aug 3, 2026",
+      "venue": "Guangzhou Poly World Trade Center"
+    },
+    {
+      "name": "Yiwu Sports and Leisure Goods Expo and Outdoor Goods Expo 2026",
+      "url": "https://expolume.com/expo/yiwu-sports-and-leisure-goods-expo-and-outdoor-goods-expo/",
+      "dates": "Aug 2, 2026 To Aug 4, 2026",
+      "venue": "Yiwu International Expo Center"
+    },
+    {
+      "name": "Inner Mongolia Agriculture Expo 2026",
+      "url": "https://expolume.com/expo/inner-mongolia-international-agriculture-expo/",
+      "dates": "Aug 2, 2026 To Aug 4, 2026",
+      "venue": "Chifeng International Convention and Exhibition Center"
+    },
+    {
+      "name": "Ningbo International Home Appliances Expo 2026",
+      "url": "https://expolume.com/expo/ningbo-international-home-appliances-expo/",
+      "dates": "Aug 5, 2026 To Aug 7, 2026",
+      "venue": "Ningbo International Conference and Exhibition Center"
+    },
+    {
+      "name": "Beijing International Charging Pile and Battery Swapping Station Expo 2026",
+      "url": "https://expolume.com/expo/beijing-international-charging-pile-and-battery-swapping-station-expo/",
+      "dates": "Aug 5, 2026 To Aug 7, 2026",
+      "venue": "Beijing Shougang Exhibition Center"
+    },
+    {
+      "name": "Shanghai International Villa Facilities Expo 2026",
+      "url": "https://expolume.com/expo/shanghai-international-villa-facilities-expo/",
+      "dates": "Aug 5, 2026 To Aug 7, 2026",
+      "venue": "Shanghai World Expo Exhibition and Convention Center"
+    },
+    {
+      "name": "Shanghai International Fire and Security Technology Equipment Expo 2026",
+      "url": "https://expolume.com/expo/shanghai-international-fire-and-security-technology-equipment-expo/",
+      "dates": "Aug 5, 2026 To Aug 7, 2026",
+      "venue": "Shanghai World Expo Exhibition and Convention Center"
+    },
+    {
+      "name": "Shanghai International Flame-Retardant Materials Expo and Conference 2026",
+      "url": "https://expolume.com/expo/shanghai-international-flame-retardant-materials-expo-and-conference/",
+      "dates": "Aug 5, 2026 To Aug 7, 2026",
+      "venue": "Shanghai World Expo Exhibition and Convention Center"
+    },
+    {
+      "name": "Shanghai International Green Architecture and Construction Materials Expo (ESBUILD) 2026",
+      "url": "https://expolume.com/expo/shanghai-international-green-architecture-and-construction-materials-expo/",
+      "dates": "Aug 5, 2026 To Aug 7, 2026",
+      "venue": "Shanghai World Expo Exhibition and Convention Center"
+    },
+    {
+      "name": "Shandong International Foundry Industry Expo 2026",
+      "url": "https://expolume.com/expo/shandong-international-foundry-industry-expo/",
+      "dates": "Aug 6, 2026 To Aug 8, 2026",
+      "venue": "Qingdao World Expo City"
+    },
+    {
+      "name": "Suzhou International Machine Tool and Intelligent Manufacturing Expo 2026",
+      "url": "https://expolume.com/expo/suzhou-international-machine-tool-and-intelligent-manufacturing-expo/",
+      "dates": "Aug 6, 2026 To Aug 8, 2026",
+      "venue": "Suzhou International Expo Center"
+    },
+    {
+      "name": "Shanghai Enzyme Industry Expo 2026",
+      "url": "https://expolume.com/expo/shanghai-enzyme-industry-expo/",
+      "dates": "Aug 6, 2026 To Aug 8, 2026",
+      "venue": "Shanghai New International Expo Center"
+    },
+    {
+      "name": "Shandong International Casting Industry Expo 2026",
+      "url": "https://expolume.com/expo/shandong-international-casting-industry-expo/",
+      "dates": "Aug 6, 2026 To Aug 8, 2026",
+      "venue": "Qingdao World Expo City"
+    },
+    {
+      "name": "Tianjin International Tea Industry Expo 2026",
+      "url": "https://expolume.com/expo/tianjin-international-tea-industry-expo/",
+      "dates": "Aug 7, 2026 To Aug 10, 2026",
+      "venue": "Tianjin Meijiang Convention and Exhibition Center"
+    },
+    {
+      "name": "Yuhuan International Auto Parts Trade Fair 2026",
+      "url": "https://expolume.com/expo/yuhuan-international-auto-parts-trade-fair/",
+      "dates": "Aug 7, 2026 To Aug 9, 2026",
+      "venue": "Yuhuan Exhibition Center"
+    },
+    {
+      "name": "Beijing Century Home Expo 2026",
+      "url": "https://expolume.com/expo/beijing-century-home-expo/",
+      "dates": "Aug 7, 2026 To Aug 9, 2026",
+      "venue": "Beiren Yichuang International Convention and Exhibition Center"
+    },
+    {
+      "name": "Xinjiang International Agricultural Expo 2026",
+      "url": "https://expolume.com/expo/xinjiang-international-agricultural-expo/",
+      "dates": "Aug 7, 2026 To Aug 8, 2026",
+      "venue": "Xinjiang International Convention and Exhibition Center"
+    },
+    {
+      "name": "Shenzhen International Home Textiles and Home Decoration Expo 2026",
+      "url": "https://expolume.com/expo/shenzhen-international-home-textiles-and-home-decoration-expo/",
+      "dates": "Aug 7, 2026 To Aug 9, 2026",
+      "venue": "Shenzhen Convention and Exhibition Center"
+    },
+    {
+      "name": "Tianjin International Jewelry Expo 2026",
+      "url": "https://expolume.com/expo/tianjin-international-jewelry-expo/",
+      "dates": "Aug 7, 2026 To Aug 10, 2026",
+      "venue": "Tianjin Meijiang Convention and Exhibition Center"
+    },
+    {
+      "name": "China International Franchise Expo 2026",
+      "url": "https://expolume.com/expo/china-international-franchise-expo/",
+      "dates": "Aug 7, 2026 To Aug 9, 2026",
+      "venue": "Shanghai New International Expo Center"
+    },
+    {
+      "name": "Fuzhou Blue Home Expo 2026",
+      "url": "https://expolume.com/expo/fuzhou-blue-home-expo/",
+      "dates": "Aug 7, 2026 To Aug 9, 2026",
+      "venue": "Fuzhou Strait International Conference and Exhibition Center"
+    },
+    {
+      "name": "Qingdao Huaxia Home Expo 2026",
+      "url": "https://expolume.com/expo/qingdao-huaxia-home-expo/",
+      "dates": "Aug 7, 2026 To Aug 9, 2026",
+      "venue": "Hongdao International Convention and Exhibition Center"
+    },
+    {
+      "name": "Xiamen Huaxia Home Expo 2026",
+      "url": "https://expolume.com/expo/xiamen-huaxia-home-expo/",
+      "dates": "Aug 7, 2026 To Aug 9, 2026",
+      "venue": "Xiamen International Conference and Exhibition Center"
+    },
+    {
+      "name": "Shanghai Huaxia Home Expo 2026",
+      "url": "https://expolume.com/expo/shanghai-huaxia-home-expo/",
+      "dates": "Aug 7, 2026 To Aug 9, 2026",
+      "venue": "Shanghai Mart"
+    },
+    {
+      "name": "Xinjiang International Seed Trade Fair 2026",
+      "url": "https://expolume.com/expo/xinjiang-international-seed-trade-fair/",
+      "dates": "Aug 8, 2026 To Aug 9, 2026",
+      "venue": "Xinjiang International Convention and Exhibition Center"
+    },
+    {
+      "name": "Zhengzhou International Hotel and Catering Industry Expo (HOTELEX) 2026",
+      "url": "https://expolume.com/expo/zhengzhou-international-hotel-and-catering-industry-expo-hotelex/",
+      "dates": "Aug 8, 2026 To Aug 10, 2026",
+      "venue": "Zhengzhou International Convention and Exhibition Center"
+    },
+    {
+      "name": "Xiamen Printing, Packaging, and Corrugated Box Industry Expo (CFPE) 2026",
+      "url": "https://expolume.com/expo/xiamen-printing-packaging-and-corrugated-box-industry-expo-cfpe/",
+      "dates": "Aug 8, 2026 To Aug 10, 2026",
+      "venue": "Xiamen International Conference and Exhibition Center"
+    },
+    {
+      "name": "Zhengzhou Frozen and Chilled Food Expo (Frozen Cube) 2026",
+      "url": "https://expolume.com/expo/zhengzhou-frozen-and-chilled-food-expo-frozen-cube/",
+      "dates": "Aug 8, 2026 To Aug 10, 2026",
+      "venue": "Zhengzhou International Convention and Exhibition Center"
+    },
+    {
+      "name": "Yunnan International Catering Ingredients and Prepared Dishes Expo 2026",
+      "url": "https://expolume.com/expo/yunnan-international-catering-ingredients-and-pre-prepared-dishes-expo/",
+      "dates": "Aug 8, 2026 To Aug 10, 2026",
+      "venue": "Kunming International Convention and Exhibition Center"
+    },
+    {
+      "name": "Guangzhou National Private Domain Expo 2026",
+      "url": "https://expolume.com/expo/guangzhou-national-private-domain-expo/",
+      "dates": "Aug 8, 2026 To Aug 9, 2026",
+      "venue": "Guangzhou Poly World Trade Center"
+    },
+    {
+      "name": "Shenyang Livestock Expo 2026",
+      "url": "https://expolume.com/expo/shenyang-livestock-expo/",
+      "dates": "Aug 9, 2026 To Aug 10, 2026",
+      "venue": "Shenyang International Expo Center"
+    },
+    {
+      "name": "Ningbo Auto Parts and Aftermarket Fair 2026",
+      "url": "https://expolume.com/expo/ningbo-auto-parts-and-aftermarket-fair/",
+      "dates": "Aug 12, 2026 To Aug 14, 2026",
+      "venue": "Ningbo International Conference and Exhibition Center"
+    },
+    {
+      "name": "China International Measurement, Control and Instrumentation Expo (MICONEX) 2026",
+      "url": "https://expolume.com/expo/china-international-measurement-control-and-instrumentation-expo-miconex/",
+      "dates": "Aug 12, 2026 To Aug 14, 2026",
+      "venue": "Hefei Binhu International Convention and Exhibition Center"
+    },
+    {
+      "name": "Asia Metal Building Design and Industry Expo 2026",
+      "url": "https://expolume.com/expo/asia-metal-building-design-and-industry-expo/",
+      "dates": "Aug 12, 2026 To Aug 14, 2026",
+      "venue": "Shanghai New International Expo Center"
+    },
+    {
+      "name": "Shanghai International Automotive Sealing System Technology and Products Expo 2026",
+      "url": "https://expolume.com/expo/shanghai-international-automotive-sealing-system-technology-and-products/",
+      "dates": "Aug 12, 2026 To Aug 14, 2026",
+      "venue": "Shanghai New International Expo Center"
+    },
+    {
+      "name": "Dalian International Auto Expo 2026",
+      "url": "https://expolume.com/expo/dalian-international-auto-expo/",
+      "dates": "Aug 12, 2026 To Aug 16, 2026",
+      "venue": "Dalian World Expo Center"
+    },
+    {
+      "name": "China Central Asia Public Security Products Expo and Xinjiang Police Equipment Expo 2026",
+      "url": "https://expolume.com/expo/china-central-asia-public-security-products-expo/",
+      "dates": "Aug 12, 2026 To Aug 14, 2026",
+      "venue": "Xinjiang International Convention and Exhibition Center"
+    },
+    {
+      "name": "China International Precision Machining Expo (PME) 2026",
+      "url": "https://expolume.com/expo/china-international-precision-machining-expo-pme/",
+      "dates": "Aug 12, 2026 To Aug 14, 2026",
+      "venue": "Shanghai New International Expo Center"
+    },
+    {
+      "name": "World of Concrete Asia (WOCA) 2026",
+      "url": "https://expolume.com/expo/world-of-concrete-asia-woca/",
+      "dates": "Aug 12, 2026 To Aug 14, 2026",
+      "venue": "Shanghai New International Expo Center"
+    },
+    {
+      "name": "Shanghai International Automotive Innovation Technology Week 2026",
+      "url": "https://expolume.com/expo/shanghai-international-automotive-innovation-technology-week/",
+      "dates": "Aug 12, 2026 To Aug 14, 2026",
+      "venue": "Shanghai New International Expo Center"
+    },
+    {
+      "name": "Shaoxing China Textile City Curtain and Home Textile Expo 2026",
+      "url": "https://expolume.com/expo/shaoxing-china-textile-city-curtain-and-home-textile-expo/",
+      "dates": "Aug 12, 2026 To Aug 14, 2026",
+      "venue": "Shaoxing International Convention and Exhibition Center"
+    },
+    {
+      "name": "Yantai International Equipment Manufacturing Expo 2026",
+      "url": "https://expolume.com/expo/yantai-international-equipment-manufacturing-expo/",
+      "dates": "Aug 13, 2026 To Aug 16, 2026",
+      "venue": "Yantai Bajiaowan International Convention and Exhibition Center"
+    },
+    {
+      "name": "China Ice Cream and Frozen Food Expo (China Ice Expo) 2026",
+      "url": "https://expolume.com/expo/china-ice-expo/",
+      "dates": "Aug 13, 2026 To Aug 15, 2026",
+      "venue": "Hangzhou Grand Convention and Exhibition Center"
+    },
+    {
+      "name": "Zhengzhou International Sugar, Alcohol, and Food Trade Fair 2026",
+      "url": "https://expolume.com/expo/zhengzhou-international-sugar-alcohol-and-food-trade-fair/",
+      "dates": "Aug 13, 2026 To Aug 15, 2026",
+      "venue": "Zhengzhou International Convention and Exhibition Center"
+    },
+    {
+      "name": "Asia Printing Technology and Consumables Expo 2026",
+      "url": "https://expolume.com/expo/asia-printing-technology-and-consumables-expo/",
+      "dates": "Aug 13, 2026 To Aug 15, 2026",
+      "venue": "Hangzhou Grand Convention and Exhibition Center"
+    },
+    {
+      "name": "Beijing International Gifts and Home Expo 2026",
+      "url": "https://expolume.com/expo/beijing-international-gifts-and-home-expo/",
+      "dates": "Aug 13, 2026 To Aug 15, 2026",
+      "venue": "Beijing China International Exhibition Center (Chaoyang Hall)"
+    },
+    {
+      "name": "China Global Premium Food Expo (All food Expo) 2026",
+      "url": "https://expolume.com/expo/all-food-expo/",
+      "dates": "Aug 13, 2026 To Aug 15, 2026",
+      "venue": "Hangzhou Grand Convention and Exhibition Center"
+    },
+    {
+      "name": "Lanzhou International Auto Show 2026",
+      "url": "https://expolume.com/expo/lanzhou-international-auto-show/",
+      "dates": "Aug 13, 2026 To Aug 15, 2026",
+      "venue": "Gansu International Convention and Exhibition Center"
+    },
+    {
+      "name": "Xinjiang Grain, Oil and Food Industry Expo 2026",
+      "url": "https://expolume.com/expo/xinjiang-grain-oil-and-food-industry-expo/",
+      "dates": "Aug 14, 2026 To Aug 15, 2026",
+      "venue": "Xinjiang International Convention and Exhibition Center"
+    },
+    {
+      "name": "IWF International Sports Goods Export and Cross-Border Trade Expo 2026",
+      "url": "https://expolume.com/expo/iwf-international-sports-goods-export-and-cross-border-trade-expo/",
+      "dates": "Aug 14, 2026 To Aug 16, 2026",
+      "venue": "Shenzhen Convention and Exhibition Center"
+    },
+    {
+      "name": "Global Seafood and Shrimp Trade Festival 2026",
+      "url": "https://expolume.com/expo/third-global-seafood-and-shrimp-trade-festival/",
+      "dates": "Aug 14, 2026 To Aug 16, 2026",
+      "venue": "Canton Fair Complex"
+    },
+    {
+      "name": "China International Medical Equipment Expo and Conference 2026",
+      "url": "https://expolume.com/expo/china-international-medical-equipment-expo-and-conference-2025/",
+      "dates": "Aug 14, 2026 To Aug 16, 2026",
+      "venue": "Beijing China National Convention Center"
+    },
+    {
+      "name": "Guangzhou International Franchise Chain Expo 2026",
+      "url": "https://expolume.com/expo/guangzhou-international-franchise-chain-expo/",
+      "dates": "Aug 14, 2026 To Aug 16, 2026",
+      "venue": "Canton Fair Complex"
+    },
+    {
+      "name": "Tianjin International Hotel Supplies and Catering Industry Expo 2026",
+      "url": "https://expolume.com/expo/tianjin-international-hotel-supplies-and-catering-industry-expo/",
+      "dates": "Aug 14, 2026 To Aug 16, 2026",
+      "venue": "Tianjin National Exhibition and Convention Center"
+    },
+    {
+      "name": "Changsha Antuan Home Expo 2026",
+      "url": "https://expolume.com/expo/changsha-antuan-home-expo/",
+      "dates": "Aug 15, 2026 To Aug 16, 2026",
+      "venue": "Hunan International Convention and Exhibition Center"
+    },
+    {
+      "name": "Xinjiang Kashgar Central Asia and South Asia Commodity Trade Fair 2026",
+      "url": "https://expolume.com/expo/xinjiang-kashgar-central-asia-and-south-asia-commodity-trade-fair/",
+      "dates": "Aug 15, 2026 To Aug 19, 2026",
+      "venue": "Kashgar International Convention and Exhibition Center"
+    },
+    {
+      "name": "Zhengzhou International Billiards Industry Expo 2026",
+      "url": "https://expolume.com/expo/zhengzhou-international-billiards-industry-expo/",
+      "dates": "Aug 15, 2026 To Aug 17, 2026",
+      "venue": "Central China International Convention and Exhibition Center"
+    },
+    {
+      "name": "Changchun International Medical Equipment Expo 2026",
+      "url": "https://expolume.com/expo/changchun-international-medical-equipment-expo/",
+      "dates": "Aug 15, 2026 To Aug 17, 2026",
+      "venue": "Changchun International Convention and Exhibition Center"
+    },
+    {
+      "name": "Ningbo International Home Appliance and Consumer Electronics Manufacturing Supply Chain Expo 2026",
+      "url": "https://expolume.com/expo/ningbo-international-home-appliance-and-consumer-electronics-manufacturing-supply-chain-expo/",
+      "dates": "Aug 18, 2026 To Aug 20, 2026",
+      "venue": "Ningbo International Conference and Exhibition Center"
+    },
+    {
+      "name": "Hangzhou International Fire Safety and Emergency Rescue Expo 2026",
+      "url": "https://expolume.com/expo/hangzhou-international-fire-safety-and-emergency-rescue-expo/",
+      "dates": "Aug 18, 2026 To Aug 20, 2026",
+      "venue": "Hangzhou International Expo Center"
+    },
+    {
+      "name": "Guangzhou World Pet Expo (GWPF) 2026",
+      "url": "https://expolume.com/expo/guangzhou-world-pet-expo/",
+      "dates": "Aug 18, 2026 To Aug 20, 2026",
+      "venue": "Guangzhou Poly World Trade Center"
+    },
+    {
+      "name": "China International Home Textiles and Accessories Expo (intertextile) 2026",
+      "url": "https://expolume.com/expo/intertextile/",
+      "dates": "Aug 18, 2026 To Aug 20, 2026",
+      "venue": "Shanghai National Exhibition and Convention Center"
+    },
+    {
+      "name": "Hangzhou International Public Security Products Expo 2026",
+      "url": "https://expolume.com/expo/hangzhou-international-public-security-products-expo/",
+      "dates": "Aug 18, 2026 To Aug 20, 2026",
+      "venue": "Hangzhou International Expo Center"
+    },
+    {
+      "name": "China International Home Textiles and Accessories Expo 2026",
+      "url": "https://expolume.com/expo/china-international-home-textiles-and-accessories-expo/",
+      "dates": "Aug 18, 2026 To Aug 20, 2026",
+      "venue": "Shanghai National Exhibition and Convention Center"
+    },
+    {
+      "name": "Shenzhen China International Medical Equipment Expo 2026",
+      "url": "https://expolume.com/expo/shenzhen-china-international-medical-equipment-expo/",
+      "dates": "Aug 19, 2026 To Aug 21, 2026",
+      "venue": "Shenzhen World Exhibition and Convention Center Baoan"
+    },
+    {
+      "name": "Asia International Intensive Livestock Expo 2026",
+      "url": "https://expolume.com/expo/asia-international-intensive-livestock-expo/",
+      "dates": "Aug 19, 2026 To Aug 21, 2026",
+      "venue": "Shanghai World Expo Exhibition and Convention Center"
+    },
+    {
+      "name": "Beijing International Radio, TV and Film Expo (BIRTV) 2026",
+      "url": "https://expolume.com/expo/beijing-international-radio-tv-and-film-expo/",
+      "dates": "Aug 19, 2026 To Aug 22, 2026",
+      "venue": "Beijing China International Exhibition Center (Chaoyang Hall)"
+    },
+    {
+      "name": "CRN Shenzhen International Rehabilitation Expo 2026",
+      "url": "https://expolume.com/expo/crn-shenzhen-international-rehabilitation-expo/",
+      "dates": "Aug 19, 2026 To Aug 21, 2026",
+      "venue": "Shenzhen World Exhibition and Convention Center Baoan"
+    },
+    {
+      "name": "Pet Fair Asia 2026 (Shanghai Pet Expo)",
+      "url": "https://expolume.com/expo/pet-fair-asia/",
+      "dates": "Aug 19, 2026 To Aug 23, 2026",
+      "venue": "Shanghai New International Expo Center"
+    },
+    {
+      "name": "Greater Bay Area International Plastics and 3D Printing Industry Expo 2026",
+      "url": "https://expolume.com/expo/guangdong%c2%b7foshan-international-plastics-industry-expo/",
+      "dates": "Aug 19, 2026 To Aug 21, 2026",
+      "venue": "Tanzhou International Convention and Exhibition Center"
+    },
+    {
+      "name": "World Robot Conference and Expo 2026 (WRC)",
+      "url": "https://expolume.com/expo/world-robot-conference-and-expo/",
+      "dates": "Aug 19, 2026 To Aug 23, 2026",
+      "venue": "Beiren Yichuang International Convention and Exhibition Center"
+    },
+    {
+      "name": "Shenyang International Medical Equipment Expo 2026",
+      "url": "https://expolume.com/expo/shenyang-international-medical-equipment-expo/",
+      "dates": "Aug 20, 2026 To Aug 22, 2026",
+      "venue": "Shenyang International Expo Center"
+    },
+    {
+      "name": "Wuxi International Machine Tool and Intelligent Industrial Equipment Expo 2026",
+      "url": "https://expolume.com/expo/wuxi-international-machine-tool-and-intelligent-industrial-equipment-expo/",
+      "dates": "Aug 20, 2026 To Aug 22, 2026",
+      "venue": "Wuxi Taihu International Expo Center"
+    },
+    {
+      "name": "Rehabilitation Equipment and Solutions Expo (REHACARE CHINA) 2026",
+      "url": "https://expolume.com/expo/rehacare-china/",
+      "dates": "Aug 20, 2026 To Aug 22, 2026",
+      "venue": "Suzhou International Expo Center"
+    },
+    {
+      "name": "China Southwest Animal Husbandry Expo 2026",
+      "url": "https://expolume.com/expo/china-southwest-animal-husbandry-expo/",
+      "dates": "Aug 20, 2026 To Aug 21, 2026",
+      "venue": "Kunming International Convention and Exhibition Center"
+    },
+    {
+      "name": "China Medical Fair 2026",
+      "url": "https://expolume.com/expo/china-medical-fair/",
+      "dates": "Aug 20, 2026 To Aug 22, 2026",
+      "venue": "Suzhou International Expo Center"
+    },
+    {
+      "name": "Wenzhou International Leather, Shoe Material, and Shoe Machinery Expo 2026",
+      "url": "https://expolume.com/expo/wenzhou-international-leather-shoe-material-and-shoe-machinery-expo/",
+      "dates": "Aug 20, 2026 To Aug 22, 2026",
+      "venue": "Wenzhou International Convention and Exhibition Center"
+    },
+    {
+      "name": "Yunnan Hardware and Electromechanical Expo 2026",
+      "url": "https://expolume.com/expo/yunnan-hardware-and-electromechanical-expo/",
+      "dates": "Aug 20, 2026 To Aug 22, 2026",
+      "venue": "Kunming International Convention and Exhibition Center"
+    },
+    {
+      "name": "Southwest Agricultural Supplies and Seed Expo 2026",
+      "url": "https://expolume.com/expo/southwest-agricultural-supplies-and-seed-expo/",
+      "dates": "Aug 20, 2026 To Aug 21, 2026",
+      "venue": "Kunming International Convention and Exhibition Center"
+    },
+    {
+      "name": "Guangzhou International Shoes Fair 2026",
+      "url": "https://expolume.com/expo/guangzhou-international-shoes-fair/",
+      "dates": "Aug 21, 2026 To Aug 23, 2026",
+      "venue": "Canton Fair Complex"
+    },
+    {
+      "name": "Xinjiang Aerospace and Defense Technology Industry Expo 2026",
+      "url": "https://expolume.com/expo/xinjiang-aerospace-and-defense-technology-industry-expo/",
+      "dates": "Aug 21, 2026 To Aug 23, 2026",
+      "venue": "Xinjiang International Convention and Exhibition Center"
+    },
+    {
+      "name": "Guangzhou International Alcohol and Beverage Manufacturing Equipment and Liquid Processing Technology Expo (BLFAasia) 2026",
+      "url": "https://expolume.com/expo/blfaasia/",
+      "dates": "Aug 21, 2026 To Aug 23, 2026",
+      "venue": "Canton Fair Complex"
+    },
+    {
+      "name": "China Veterinary Conference 2026",
+      "url": "https://expolume.com/expo/china-veterinary-conference/",
+      "dates": "Aug 21, 2026 To Aug 23, 2026",
+      "venue": "Jinan Yellow River International Convention and Exhibition Center"
+    },
+    {
+      "name": "FLCE Asia Food Expo 2026",
+      "url": "https://expolume.com/expo/flce-asia-food-expo/",
+      "dates": "Aug 21, 2026 To Aug 23, 2026",
+      "venue": "Canton Fair Complex"
+    },
+    {
+      "name": "Shanxi Intelligent Manufacturing Industry Expo, Hardware and Electromechanical, Machine Tool Automation Expo 2026",
+      "url": "https://expolume.com/expo/shanxi-intelligent-manufacturing-industry-expo/",
+      "dates": "Aug 21, 2026 To Aug 23, 2026",
+      "venue": "Xiaohe International Convention and Exhibition Center"
+    },
+    {
+      "name": "Guangzhou International High-end Spirits and Beer Expo 2026",
+      "url": "https://expolume.com/expo/guangzhou-international-high-end-spirits-and-beer-expo-2025/",
+      "dates": "Aug 21, 2026 To Aug 23, 2026",
+      "venue": "Canton Fair Complex"
+    },
+    {
+      "name": "China Life Sciences Conference and Expo 2026",
+      "url": "https://expolume.com/expo/china-life-sciences-conference-and-expo/",
+      "dates": "Aug 21, 2026 To Aug 23, 2026",
+      "venue": "Canton Fair Complex"
+    },
+    {
+      "name": "China Precision Medicine Expo 2026",
+      "url": "https://expolume.com/expo/china-precision-medicine-expo/",
+      "dates": "Aug 21, 2026 To Aug 23, 2026",
+      "venue": "Guangzhou Poly World Trade Center"
+    },
+    {
+      "name": "Guangzhou International Overseas Property, Immigration and Study Abroad Expo 2026",
+      "url": "https://expolume.com/expo/guangzhou-international-overseas-property-immigration-and-study-abroad-expo/",
+      "dates": "Aug 21, 2026 To Aug 23, 2026",
+      "venue": "Canton Fair Complex"
+    },
+    {
+      "name": "Qingdao Franchise Franchise and Food Expo 2026",
+      "url": "https://expolume.com/expo/qingdao-franchise-franchise-and-food-expo/",
+      "dates": "Aug 21, 2026 To Aug 22, 2026",
+      "venue": "Qingdao World Expo City"
+    },
+    {
+      "name": "Ningbo International Auto Expo 2026",
+      "url": "https://expolume.com/expo/ningbo-international-auto-exp/",
+      "dates": "Aug 21, 2026 To Aug 24, 2026",
+      "venue": "Ningbo International Conference and Exhibition Center"
+    },
+    {
+      "name": "Nanjing Catering and Hotpot Ingredients Expo 2026",
+      "url": "https://expolume.com/expo/nanjing-catering-and-hotpot-ingredients-expo/",
+      "dates": "Aug 21, 2026 To Aug 23, 2026",
+      "venue": "Nanjing International Expo Center"
+    },
+    {
+      "name": "Guangzhou Elderly Care and Health Industry Expo 2026",
+      "url": "https://expolume.com/expo/guangzhou-elderly-care-and-health-industry-expo/",
+      "dates": "Aug 21, 2026 To Aug 23, 2026",
+      "venue": "Canton Fair Complex"
+    },
+    {
+      "name": "Asia Food Expo (FLCEAsia) 2026",
+      "url": "https://expolume.com/expo/asia-food-expo/",
+      "dates": "Aug 21, 2026 To Aug 23, 2026",
+      "venue": "Canton Fair Complex"
+    },
+    {
+      "name": "Guangzhou International Elevator Expo 2026",
+      "url": "https://expolume.com/expo/guangzhou-international-elevator-expo/",
+      "dates": "Aug 21, 2026 To Aug 23, 2026",
+      "venue": "Canton Fair Complex"
+    },
+    {
+      "name": "Shenyang International Sugar, Alcohol and Food Fair 2026",
+      "url": "https://expolume.com/expo/shenyang-international-sugar-alcohol-and-food-fair/",
+      "dates": "Aug 21, 2026 To Aug 23, 2026",
+      "venue": "Shenyang International Convention and Exhibition Center"
+    },
+    {
+      "name": "Yiwu International Hotel Supplies and Catering Expo 2026",
+      "url": "https://expolume.com/expo/yiwu-international-hotel-supplies-and-catering-expo/",
+      "dates": "Aug 22, 2026 To Aug 24, 2026",
+      "venue": "Yiwu International Expo Center"
+    },
+    {
+      "name": "Shanxi Alcohol, Food and Beverage Trade Fair 2026",
+      "url": "https://expolume.com/expo/shanxi-alcohol-food-and-beverage-trade-fair/",
+      "dates": "Aug 22, 2026 To Aug 24, 2026",
+      "venue": "Shanxi Exhibition Center"
+    },
+    {
+      "name": "Shanghai International RV Expo 2026",
+      "url": "https://expolume.com/expo/shanghai-international-rv-show/",
+      "dates": "Aug 22, 2026 To Aug 24, 2026",
+      "venue": "Shanghai National Exhibition and Convention Center"
+    },
+    {
+      "name": "Zhengzhou Household Paper Products and Technology Expo 2026",
+      "url": "https://expolume.com/expo/zhengzhou-household-paper-products-and-technology-expo/",
+      "dates": "Aug 23, 2026 To Aug 25, 2026",
+      "venue": "Zhengzhou International Convention and Exhibition Center"
+    },
+    {
+      "name": "World of Plant Extracts Innovative Natural Ingredients Expo and World of Health Products and Functional Foods Expo 2026",
+      "url": "https://expolume.com/expo/wpe-and-whpe/",
+      "dates": "Aug 24, 2026 To Aug 26, 2026",
+      "venue": "Xian International Convention and Exhibition Center"
+    },
+    {
+      "name": "Lanzhou Water Industry Summit Forum and Water Technology and Equipment Expo 2026",
+      "url": "https://expolume.com/expo/lanzhou-water-industry-summit-forum-and-water-technology-and-equipment-expo-2025/",
+      "dates": "Aug 24, 2026 To Aug 26, 2026",
+      "venue": "Gansu International Convention and Exhibition Center"
+    },
+    {
+      "name": "Xi'an International Natural Extracts, Pharmaceutical, and Innovative Raw Materials Expo 2026",
+      "url": "https://expolume.com/expo/xian-international-natural-extracts-pharmaceutical-and-innovative-raw-materials-exp/",
+      "dates": "Aug 24, 2026 To Aug 26, 2026",
+      "venue": "Xian Silk Road International Convention and Exhibition Center"
+    },
+    {
+      "name": "Zhengzhou Military Technology Information and Equipment Expo 2026",
+      "url": "https://expolume.com/expo/zhengzhou-military-technology-information-and-equipment-expo/",
+      "dates": "Aug 24, 2026 To Aug 26, 2026",
+      "venue": "Zhengzhou International Convention and Exhibition Center"
+    },
+    {
+      "name": "Shanghai Apparel Fabrics 2026",
+      "url": "https://expolume.com/expo/shanghai-apparel-fabrics/",
+      "dates": "Aug 25, 2026 To Aug 27, 2026",
+      "venue": "Shanghai National Exhibition and Convention Center"
+    },
+    {
+      "name": "Asia Adult Expo 2026",
+      "url": "https://expolume.com/expo/asia-adult-expo/",
+      "dates": "Aug 25, 2026 To Aug 27, 2026",
+      "venue": "Hong Kong Convention and Exhibition Centre"
+    },
+    {
+      "name": "Shenzhen International Electronics Expo (ELEXCON) 2026",
+      "url": "https://expolume.com/expo/elexcon/",
+      "dates": "Aug 25, 2026 To Aug 27, 2026",
+      "venue": "Shenzhen Convention and Exhibition Center"
+    },
+    {
+      "name": "China International Textile Yarn Expo 2026",
+      "url": "https://expolume.com/expo/china-international-textile-yarn/",
+      "dates": "Aug 25, 2026 To Aug 27, 2026",
+      "venue": "Shanghai National Exhibition and Convention Center"
+    },
+    {
+      "name": "CHIC China International Fashion Fair 2026",
+      "url": "https://expolume.com/expo/chic/",
+      "dates": "Aug 25, 2026 To Aug 27, 2026",
+      "venue": "Shanghai National Exhibition and Convention Center"
+    },
+    {
+      "name": "China International Knitting Expo (PH Value) 2026",
+      "url": "https://expolume.com/expo/china-international-knitting-expo-ph-value/",
+      "dates": "Aug 25, 2026 To Aug 27, 2026",
+      "venue": "Shanghai National Exhibition and Convention Center"
+    },
+    {
+      "name": "Shanghai International Trendy Yarn Expo 2026",
+      "url": "https://expolume.com/expo/shanghai-international-trendy-yarn-expo/",
+      "dates": "Aug 25, 2026 To Aug 27, 2026",
+      "venue": "Shanghai World Expo Exhibition and Convention Center"
+    },
+    {
+      "name": "Chengdu International Beauty, Cosmetics & Fashion Hair Products Expo (AHE) 2026",
+      "url": "https://expolume.com/expo/chengdu-international-beauty-cosmetics-fashion-hair-products-expo-ahe/",
+      "dates": "Aug 25, 2026 To Aug 27, 2026",
+      "venue": "Chengdu Century City New International Convention and Exhibition Center"
+    },
+    {
+      "name": "Shenzhen International Grinding and Abrasives Technology Expo (GrindTec 2026)",
+      "url": "https://expolume.com/expo/grindtec/",
+      "dates": "Aug 26, 2026 To Aug 28, 2026",
+      "venue": "Shenzhen World Exhibition and Convention Center Baoan"
+    },
+    {
+      "name": "Shenzhen International Wire and Cable Expo 2026",
+      "url": "https://expolume.com/expo/shenzhen-international-wire-and-cable-expo/",
+      "dates": "Aug 26, 2026 To Aug 28, 2026",
+      "venue": "Shenzhen World Exhibition and Convention Center Baoan"
+    },
+    {
+      "name": "Shenzhen International Cultural and Creative and Trendy Toys Expo 2026",
+      "url": "https://expolume.com/expo/shenzhen-international-cultural-and-creative-and-trendy-toys-expo/",
+      "dates": "Aug 26, 2026 To Aug 28, 2026",
+      "venue": "Shenzhen World Exhibition and Convention Center Baoan"
+    },
+    {
+      "name": "Suzhou International Beauty Expo 2026",
+      "url": "https://expolume.com/expo/suzhou-international-beauty-expo/",
+      "dates": "Aug 26, 2026 To Aug 28, 2026",
+      "venue": "Suzhou Broadcasting and TV International Exhibition Center"
+    },
+    {
+      "name": "Shanghai International Environmental Air Purification Industry Expo 2026",
+      "url": "https://expolume.com/expo/shanghai-international-environmental-air-purification-industry-expo/",
+      "dates": "Aug 26, 2026 To Aug 28, 2026",
+      "venue": "Shanghai New International Expo Center"
+    },
+    {
+      "name": "Shenzhen International Intelligent Equipment Industry and Industrial Automation and Robotics Expo 2026",
+      "url": "https://expolume.com/expo/shenzhen-international-intelligent-equipment-industry-and-industrial-automation-and-robotics-expo/",
+      "dates": "Aug 26, 2026 To Aug 28, 2026",
+      "venue": "Shenzhen World Exhibition and Convention Center Baoan"
+    },
+    {
+      "name": "Shenzhen International Solar Photovoltaic and Smart Energy Expo 2026",
+      "url": "https://expolume.com/expo/shenzhen-international-solar-photovoltaic-and-smart-energy-expo/",
+      "dates": "Aug 26, 2026 To Aug 28, 2026",
+      "venue": "Shenzhen World Exhibition and Convention Center Baoan"
+    },
+    {
+      "name": "Shanghai International Power Components and Renewable Energy Management Expo 2026",
+      "url": "https://expolume.com/expo/shanghai-international-power-components-and-renewable-energy-management-expo/",
+      "dates": "Aug 26, 2026 To Aug 28, 2026",
+      "venue": "Shanghai New International Expo Center"
+    },
+    {
+      "name": "China International Automotive Testing and Quality Monitoring Expo 2026",
+      "url": "https://expolume.com/expo/china-international-automotive-testing-and-quality-monitoring-expo/",
+      "dates": "Aug 26, 2026 To Aug 28, 2026",
+      "venue": "Shanghai World Expo Exhibition and Convention Center"
+    },
+    {
+      "name": "Shenzhen International Smart Display System Industry Application Expo 2026",
+      "url": "https://expolume.com/expo/2025-shenzhen-international-smart-display-system-industry-application-expo/",
+      "dates": "Aug 26, 2026 To Aug 28, 2026",
+      "venue": "Shenzhen Convention and Exhibition Center"
+    },
+    {
+      "name": "Shanghai International Catering and Ingredients Expo 2026",
+      "url": "https://expolume.com/expo/shanghai-international-catering-and-ingredients-expo/",
+      "dates": "Aug 26, 2026 To Aug 28, 2026",
+      "venue": "Shanghai New International Expo Center"
+    },
+    {
+      "name": "Shenzhen International 3D Printing, Additive Manufacturing, and Precision Molding Expo 2026",
+      "url": "https://expolume.com/expo/shenzhen-international-3d-printing-additive-manufacturing-and-precision-molding-expo/",
+      "dates": "Aug 26, 2026 To Aug 28, 2026",
+      "venue": "Shenzhen World Exhibition and Convention Center Baoan"
+    },
+    {
+      "name": "Shenzhen Precision Ceramics and Power Semiconductor Industry Chain Expo (CMPE) 2026",
+      "url": "https://expolume.com/expo/shenzhen-precision-ceramics-and-power-semiconductor-industry-chain-expo/",
+      "dates": "Aug 26, 2026 To Aug 28, 2026",
+      "venue": "Shenzhen World Exhibition and Convention Center Baoan"
+    },
+    {
+      "name": "Shenzhen International Connector, Cable Harness and Processing Equipment Expo (ICH) 2026",
+      "url": "https://expolume.com/expo/shenzhen-international-connector-cable-harness-and-processing-equipment-expo/",
+      "dates": "Aug 26, 2026 To Aug 28, 2026",
+      "venue": "Shenzhen World Exhibition and Convention Center Baoan"
+    },
+    {
+      "name": "Asia-Pacific Vegetarian Expo and Shanghai International Catering Ingredients Expo 2026",
+      "url": "https://expolume.com/expo/asia-pacific-vegetarian-expo-and-shanghai-international-catering-ingredients-expo/",
+      "dates": "Aug 26, 2026 To Aug 28, 2026",
+      "venue": "Shanghai New International Expo Center"
+    },
+    {
+      "name": "Shanghai World Seafood Expo 2026",
+      "url": "https://expolume.com/expo/shanghai-world-seafood-expo/",
+      "dates": "Aug 26, 2026 To Aug 28, 2026",
+      "venue": "Shanghai New International Expo Center"
+    },
+    {
+      "name": "Shanghai International Fruit Expo 2026",
+      "url": "https://expolume.com/expo/shanghai-international-fruit-expo/",
+      "dates": "Aug 26, 2026 To Aug 28, 2026",
+      "venue": "Shanghai New International Expo Center"
+    },
+    {
+      "name": "Shenzhen International Cultural Tourism Technology and Amusement Equipment Expo 2026",
+      "url": "https://expolume.com/expo/shenzhen-international-cultural-tourism-technology-and-amusement-equipment-expo/",
+      "dates": "Aug 26, 2026 To Aug 28, 2026",
+      "venue": "Shenzhen World Exhibition and Convention Center Baoan"
+    },
+    {
+      "name": "Shenzhen International Internet of Things Expo (IOTE) 2026",
+      "url": "https://expolume.com/expo/shenzhen-international-internet-of-things-expo-iote/",
+      "dates": "Aug 26, 2026 To Aug 28, 2026",
+      "venue": "Shenzhen World Exhibition and Convention Center Baoan"
+    },
+    {
+      "name": "Shandong Sports Expo 2026",
+      "url": "https://expolume.com/expo/shandong-sports-expo/",
+      "dates": "Aug 27, 2026 To Aug 29, 2026",
+      "venue": "Linyi International Expo Center"
+    },
+    {
+      "name": "Cangzhou Pipeline Equipment Expo 2026",
+      "url": "https://expolume.com/expo/cangzhou-pipeline-equipment-expo/",
+      "dates": "Aug 28, 2026 To Aug 30, 2026",
+      "venue": "Cangzhou International Convention and Exhibition Center"
+    },
+    {
+      "name": "Zhengzhou Cross-Border E-Commerce Fair 2026",
+      "url": "https://expolume.com/expo/zhengzhou-cross-border-e-commerce-fair/",
+      "dates": "Aug 28, 2026 To Aug 30, 2026",
+      "venue": "Zhengzhou International Convention and Exhibition Center"
+    },
+    {
+      "name": "Beijing International Bicycle Expo 2026",
+      "url": "https://expolume.com/expo/beijing-international-bicycle-expo/",
+      "dates": "Aug 28, 2026 To Aug 30, 2026",
+      "venue": "Beijing China International Exhibition Center (Chaoyang Hall)"
+    },
+    {
+      "name": "China Moxa Industry Expo 2026",
+      "url": "https://expolume.com/expo/china-moxa-industry-expo/",
+      "dates": "Aug 28, 2026 To Aug 30, 2026",
+      "venue": "Beijing China International Exhibition Center (Chaoyang Hall)"
+    },
+    {
+      "name": "Guangzhou Huaxia Home Expo 2026",
+      "url": "https://expolume.com/expo/guangzhou-huaxia-home-expo/",
+      "dates": "Aug 28, 2026 To Aug 30, 2026",
+      "venue": "Guangzhou Poly World Trade Center"
+    },
+    {
+      "name": "Baotou Blue Home Expo 2026",
+      "url": "https://expolume.com/expo/baotou-blue-home-expo/",
+      "dates": "Aug 28, 2026 To Aug 30, 2026",
+      "venue": "Baotou International Convention and Exhibition Center"
+    },
+    {
+      "name": "China Global Wellbeing Expo 2026",
+      "url": "https://expolume.com/expo/china-global-wellbeing-expo/",
+      "dates": "Aug 28, 2026 To Aug 30, 2026",
+      "venue": "Beijing National Convention Center Phase 2"
+    },
+    {
+      "name": "Anhui International Food and Beverage Expo 2026",
+      "url": "https://expolume.com/expo/anhui-international-food-and-beverage-expo/",
+      "dates": "Aug 29, 2026 To Aug 31, 2026",
+      "venue": "Hefei Binhu International Convention and Exhibition Center"
+    },
+    {
+      "name": "Taishan International Mining Equipment and Technology Expo 2026",
+      "url": "https://expolume.com/expo/taishan-international-mining-equipment-and-technology-expo/",
+      "dates": "Aug 31, 2026 To Sep 2, 2026",
+      "venue": "Taishan Convention and Exhibition Center"
+    },
+    {
+      "name": "China Semiconductor Equipment, Core Components and Materials Expo (CSEAC) 2026",
+      "url": "https://expolume.com/expo/cseac/",
+      "dates": "Aug 31, 2026 To Sep 2, 2026",
+      "venue": "Wuxi Taihu International Expo Center"
+    }
+  ]
 }
