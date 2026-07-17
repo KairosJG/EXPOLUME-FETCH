@@ -73,10 +73,16 @@ def build_search_url(start_str, end_str, limit=1500):
 
 def extract_fairs_from_html(html):
     """
-    Parses the HTML fragment the search endpoint returns. Same
-    ancestor-climbing approach as before (look for a parent whose text
-    contains a date range), just done with BeautifulSoup instead of a
-    live page, since we now have raw HTML rather than a browser page.
+    Parses the HTML fragment the search endpoint returns.
+
+    For each fair link, we climb up through parent elements looking for
+    one whose text contains a date range. IMPORTANT: at each step we check
+    whether that ancestor now contains MORE THAN ONE fair link — if so,
+    we've crossed out of this fair's own card and into a container that
+    holds multiple cards. We stop immediately in that case and use the
+    last known single-card-scoped text, rather than risk grabbing a
+    neighboring fair's date/venue by mistake (this was causing occasional
+    wrong, sometimes past, dates to show up).
     """
     soup = BeautifulSoup(html, "html.parser")
     fairs = []
@@ -92,17 +98,25 @@ def extract_fairs_from_html(html):
         seen.add(href)
 
         context = ""
+        last_safe_text = ""
         node = link.parent
-        for _ in range(6):
+        for _ in range(8):
             if node is None:
                 break
+            links_here = {
+                a.get("href") for a in node.select('a[href*="/expo/"]') if a.get("href")
+            }
+            if len(links_here) > 1:
+                # This ancestor spans multiple cards — stop, don't use its text.
+                break
             text = node.get_text("\n", strip=True)
+            last_safe_text = text
             if DATE_PATTERN.search(text):
                 context = text
                 break
             node = node.parent
-        if not context and link.parent:
-            context = link.parent.get_text("\n", strip=True)
+        if not context:
+            context = last_safe_text
 
         match = DATE_PATTERN.search(context)
         dates = f"{match.group(1)} To {match.group(2)}" if match else None

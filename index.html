@@ -153,9 +153,11 @@
 <script>
 const MONTH_NAMES = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
 const LOCAL_KEY = 'china_fair_radar_drafts_v1';
+const REMOVALS_KEY = 'china_fair_radar_removals_v1';
 let ALL_FAIRS = [];
 let DECISIONS = {};
 let DRAFTS = {};
+let REMOVALS = {};
 
 const NICHE_RULES = [
   { key: "food-agro", label: "Alimentos e Agricultura", words: ["food","agri","agriculture","farm","seafood","meat","dairy","snack","drink","beverage","tea","coffee","fruit","vegetable","grain","sugar","ice cream","bakery","catering","nutrition","fisheries"] },
@@ -187,9 +189,14 @@ async function loadJSON(path) {
 function loadDrafts() {
   try { DRAFTS = JSON.parse(localStorage.getItem(LOCAL_KEY) || '{}'); }
   catch (e) { DRAFTS = {}; }
+  try { REMOVALS = JSON.parse(localStorage.getItem(REMOVALS_KEY) || '{}'); }
+  catch (e) { REMOVALS = {}; }
 }
 function saveDrafts() {
   try { localStorage.setItem(LOCAL_KEY, JSON.stringify(DRAFTS)); } catch (e) {}
+}
+function saveRemovals() {
+  try { localStorage.setItem(REMOVALS_KEY, JSON.stringify(REMOVALS)); } catch (e) {}
 }
 function fmtUpdated(iso) {
   if (!iso) return "Ainda não foi executado";
@@ -214,7 +221,12 @@ function guessCity(venue) {
 function decisionFor(fair) { return DECISIONS[fair.url] || DECISIONS[fair.name] || null; }
 function officialFlag(fair) { const d = decisionFor(fair); return !!(d && d.flagged); }
 function draftFlag(fair) { return !!DRAFTS[fair.url]; }
-function isFlagged(fair) { return officialFlag(fair) || draftFlag(fair); }
+function removalDrafted(fair) { return !!REMOVALS[fair.url]; }
+// Visually flagged = officially flagged (and not marked for removal), OR locally drafted as added.
+function isFlagged(fair) {
+  if (officialFlag(fair)) return !removalDrafted(fair);
+  return draftFlag(fair);
+}
 
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -227,10 +239,25 @@ function showToast(msg) {
 function toggleFlag(url) {
   const fair = ALL_FAIRS.find(f => f.url === url);
   if (!fair) return;
+
   if (officialFlag(fair)) {
-    showToast('Já está marcada oficialmente em decisions.json.');
+    // Official entries can't be edited directly (the site can't write back
+    // to GitHub), so clicking toggles a local "marked for removal" note
+    // instead, with a reminder of what to actually delete from the file.
+    if (removalDrafted(fair)) {
+      delete REMOVALS[url];
+      saveRemovals();
+      showToast('Marcação de remoção desfeita.');
+    } else {
+      REMOVALS[url] = true;
+      saveRemovals();
+      navigator.clipboard.writeText(url).catch(() => {});
+      showToast('Marcado para remover. Apague a entrada dessa URL em data/decisions.json e faça commit (URL copiada).');
+    }
+    applyFilters();
     return;
   }
+
   if (draftFlag(fair)) {
     delete DRAFTS[url];
     saveDrafts();
@@ -321,9 +348,20 @@ function renderSummary(fairs) {
 
 function interestCellHTML(fair) {
   const official = officialFlag(fair);
+  const removing = removalDrafted(fair);
   const draft = draftFlag(fair);
-  const cls = official ? 'official' : (draft ? 'draft' : '');
-  const label = official ? 'Marcada' : (draft ? 'Marcada (não salva)' : 'Não revisada');
+
+  let cls, label;
+  if (official && removing) {
+    cls = 'draft'; label = 'Remoção pendente';
+  } else if (official) {
+    cls = 'official'; label = 'Marcada';
+  } else if (draft) {
+    cls = 'draft'; label = 'Marcada (não salva)';
+  } else {
+    cls = ''; label = 'Não revisada';
+  }
+
   const d = decisionFor(fair);
   const safeUrl = (fair.url || '').replace(/'/g, "\\'");
   return `
@@ -332,8 +370,8 @@ function interestCellHTML(fair) {
         <img src="assets/china-flag.png" alt="Bandeira da China" />
       </button>
       <div class="interest-text">
-        <span class="interest-label ${official || draft ? 'on' : ''}">${label}</span>
-        ${d && d.note ? `<span class="note">${escapeHTML(d.note)}</span>` : ''}
+        <span class="interest-label ${isFlagged(fair) ? 'on' : ''}">${label}</span>
+        ${d && d.note && !removing ? `<span class="note">${escapeHTML(d.note)}</span>` : ''}
       </div>
     </div>
   `;
