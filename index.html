@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>China Fair Radar</title>
+<title>Radar de Feiras na China</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -14,7 +14,7 @@
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
   a { color: inherit; }
-  .wrap { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
+  .wrap { max-width: 1150px; margin: 0 auto; padding: 40px 24px 80px; }
 
   .header { display: flex; align-items: flex-end; gap: 28px; flex-wrap: wrap; border-bottom: 1px solid var(--hairline); padding-bottom: 28px; margin-bottom: 24px; }
   .month-tile { line-height: 0.85; }
@@ -43,12 +43,17 @@
   .stat.flag .n { color: var(--yellow); }
   .stat .l { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
 
-  .table-head { display: grid; grid-template-columns: 2fr 1.3fr 1.5fr 0.9fr; gap: 16px; padding: 0 20px 12px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-faint); border-bottom: 1px solid var(--hairline); }
-  .row { display: grid; grid-template-columns: 2fr 1.3fr 1.5fr 0.9fr; gap: 16px; padding: 18px 20px; border-bottom: 1px solid var(--hairline); align-items: center; transition: background 0.15s ease; }
+  .table-head { display: grid; grid-template-columns: 2.1fr 1.2fr 1.4fr 0.9fr; gap: 16px; padding: 0 20px 12px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-faint); border-bottom: 1px solid var(--hairline); }
+  .row { display: grid; grid-template-columns: 2.1fr 1.2fr 1.4fr 0.9fr; gap: 16px; padding: 18px 20px; border-bottom: 1px solid var(--hairline); align-items: center; transition: background 0.15s ease; }
   .row:hover { background: var(--panel); }
   .fair-name { font-weight: 600; font-size: 15px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
   .fair-name:hover { color: var(--yellow); }
   .fair-name .arrow { font-size: 13px; color: var(--text-faint); }
+  .niche-tag {
+    display: inline-block; margin-top: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+    letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-faint);
+    border: 1px solid var(--hairline); border-radius: 2px; padding: 3px 7px;
+  }
   .dates, .venue { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--text-dim); }
   .venue { font-family: 'Inter', sans-serif; }
 
@@ -72,19 +77,20 @@
     background: var(--panel-alt); border: 1px solid var(--yellow); color: var(--text);
     padding: 10px 18px; border-radius: 4px; font-size: 13px; font-family: 'Inter', sans-serif;
     opacity: 0; transition: opacity 0.2s ease, transform 0.2s ease; pointer-events: none; z-index: 10;
+    max-width: 90vw; text-align: center;
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
   .empty, .loading { padding: 60px 20px; text-align: center; color: var(--text-faint); font-family: 'IBM Plex Mono', monospace; font-size: 13px; }
   footer { margin-top: 40px; font-size: 12px; color: var(--text-faint); font-family: 'IBM Plex Mono', monospace; }
 
-  @media (max-width: 720px) {
+  @media (max-width: 780px) {
     .month-tile .num { font-size: 48px; }
     .summary { grid-template-columns: repeat(3, 1fr); }
     .table-head { display: none; }
     .row { grid-template-columns: 1fr; gap: 6px; padding: 16px 4px; }
-    .row .dates::before { content: "Dates: "; color: var(--text-faint); }
-    .row .venue::before { content: "Venue: "; color: var(--text-faint); }
+    .row .dates::before { content: "Datas: "; color: var(--text-faint); }
+    .row .venue::before { content: "Local: "; color: var(--text-faint); }
     .filters { flex-direction: column; align-items: stretch; }
     .result-count { margin-left: 0; }
   }
@@ -97,51 +103,75 @@
     <div class="header">
       <div class="month-tile"><div class="num" id="monthNum">--</div><div class="rule"></div></div>
       <div class="header-text">
-        <p class="eyebrow">12P &middot; China Trade Fair Radar</p>
-        <h1 id="pageTitle">Loading&hellip;</h1>
-        <p class="updated" id="updatedAt">Checking last update&hellip;</p>
+        <p class="eyebrow">12P &middot; Radar de Feiras na China</p>
+        <h1 id="pageTitle">Carregando&hellip;</h1>
+        <p class="updated" id="updatedAt">Verificando última atualização&hellip;</p>
       </div>
     </div>
 
     <div class="filters">
-      <select id="monthFilter"><option value="all">All months</option></select>
-      <input type="text" id="cityFilter" list="cityOptions" placeholder="Type a city..." autocomplete="off" />
+      <select id="monthFilter"><option value="all">Todos os meses</option></select>
+      <select id="nicheFilter"><option value="all">Todos os nichos</option></select>
+      <input type="text" id="cityFilter" list="cityOptions" placeholder="Digite uma cidade..." autocomplete="off" />
       <datalist id="cityOptions"></datalist>
-      <label class="toggle"><input type="checkbox" id="flaggedOnly" /> Show only flagged</label>
+      <label class="toggle"><input type="checkbox" id="flaggedOnly" /> Mostrar só marcadas</label>
       <span class="result-count" id="resultCount"></span>
     </div>
 
     <div class="summary" id="summary">
-      <div class="stat"><div class="n">&mdash;</div><div class="l">Found</div></div>
-      <div class="stat flag"><div class="n">&mdash;</div><div class="l">Flagged</div></div>
-      <div class="stat"><div class="n">&mdash;</div><div class="l">Not reviewed</div></div>
+      <div class="stat"><div class="n">&mdash;</div><div class="l">Encontradas</div></div>
+      <div class="stat flag"><div class="n">&mdash;</div><div class="l">Marcadas</div></div>
+      <div class="stat"><div class="n">&mdash;</div><div class="l">Não revisadas</div></div>
     </div>
 
-    <div class="table-head"><div>Fair</div><div>Dates</div><div>Venue</div><div>Interest</div></div>
-    <div id="rows"><div class="loading">Fetching data/fairs.json&hellip;</div></div>
+    <div class="table-head"><div>Feira</div><div>Datas</div><div>Local</div><div>Interesse</div></div>
+    <div id="rows"><div class="loading">Buscando data/fairs.json&hellip;</div></div>
 
     <footer>
-      Data refreshed periodically from Expolume. Click the flag to mark interest &mdash;
-      it copies a ready-to-paste snippet for <code>data/decisions.json</code>. A dashed flag
-      means it's only saved in this browser; paste + commit to make it official and visible
-      to everyone.
+      Dados atualizados periodicamente a partir do Expolume. Clique na bandeira pra marcar interesse &mdash;
+      isso copia um trecho pronto pra colar em <code>data/decisions.json</code>. Uma bandeira tracejada
+      significa que está salva só neste navegador; cole e faça commit pra tornar oficial e visível pra todos.
     </footer>
   </div>
 
   <div class="toast" id="toast"></div>
 
 <script>
-const MONTH_NAMES = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const MONTH_NAMES = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
 const LOCAL_KEY = 'china_fair_radar_drafts_v1';
 let ALL_FAIRS = [];
 let DECISIONS = {};
 let DRAFTS = {};
 
+// ---- Classificação de nicho por palavras-chave no nome da feira ----
+// Ordem importa: a primeira categoria cuja palavra-chave aparecer no nome vence.
+const NICHE_RULES = [
+  { key: "food-agro", label: "Alimentos e Agricultura", words: ["food","agri","agriculture","farm","seafood","meat","dairy","snack","drink","beverage","tea","coffee","fruit","vegetable","grain","sugar","ice cream","bakery","catering","nutrition","fisheries"] },
+  { key: "home-build", label: "Casa, Cozinha e Construção", words: ["kitchen","bathroom","home","house","furniture","furnishing","building","construction","hardware","ceramic","sanitary","décor","decor","interior","real estate","architecture"] },
+  { key: "electronics", label: "Eletrônicos e Eletrodomésticos", words: ["electronic","appliance","digital","semiconductor","chip","led","display","consumer electronics","gadget","home appliance"] },
+  { key: "machinery", label: "Máquinas e Manufatura", words: ["machinery","manufacturing","industrial","equipment","tools","welding","metal","machine tool","robotics","automation","plastics","printing","packaging machinery","mold"] },
+  { key: "automotive", label: "Automotivo", words: ["auto","vehicle","car ","car,","ev ","motor","tire","tyre"] },
+  { key: "health-beauty", label: "Saúde e Beleza", words: ["health","medical","pharma","hospital","beauty","cosmetic","wellness","dental","fitness","adult"] },
+  { key: "fashion-textile", label: "Moda e Têxtil", words: ["textile","fabric","apparel","fashion","garment","footwear","shoe","jewelry","jewellery","accessories","leather"] },
+  { key: "toys-gifts", label: "Brinquedos e Presentes", words: ["toy","gift","game","hobby","stationery"] },
+  { key: "logistics-energy", label: "Logística e Energia", words: ["logistics","supply chain","warehouse","energy","solar","renewable","battery","oil","gas","mining","power generation"] },
+  { key: "retail-trade", label: "Varejo e Comércio", words: ["retail","commodities","sourcing","wholesale","import","export","commodity","sundries","trading"] },
+];
+const OTHER_NICHE = { key: "other", label: "Outros" };
+
+function classifyNiche(name) {
+  if (!name) return OTHER_NICHE;
+  const lower = name.toLowerCase();
+  for (const rule of NICHE_RULES) {
+    if (rule.words.some(w => lower.includes(w))) return rule;
+  }
+  return OTHER_NICHE;
+}
+
 async function loadJSON(path) {
   try { const res = await fetch(path, { cache: "no-store" }); return res.ok ? await res.json() : null; }
   catch (e) { return null; }
 }
-
 function loadDrafts() {
   try { DRAFTS = JSON.parse(localStorage.getItem(LOCAL_KEY) || '{}'); }
   catch (e) { DRAFTS = {}; }
@@ -149,11 +179,10 @@ function loadDrafts() {
 function saveDrafts() {
   try { localStorage.setItem(LOCAL_KEY, JSON.stringify(DRAFTS)); } catch (e) {}
 }
-
 function fmtUpdated(iso) {
-  if (!iso) return "Not yet run";
+  if (!iso) return "Ainda não foi executado";
   const d = new Date(iso);
-  return "Last updated " + d.toLocaleString(undefined, { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
+  return "Última atualização em " + d.toLocaleString('pt-BR', { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
 }
 function escapeHTML(str) {
   const div = document.createElement('div');
@@ -165,7 +194,6 @@ function parseStart(datesStr) {
   const d = new Date(datesStr.split(" To ")[0].trim());
   return isNaN(d) ? null : { year: d.getFullYear(), month: d.getMonth() + 1 };
 }
-// Heuristic: city is usually the venue's first word (e.g. "Xian International..." -> "Xian").
 function guessCity(venue) {
   if (!venue) return null;
   return venue.trim().split(/\s+/)[0] || null;
@@ -188,13 +216,13 @@ function toggleFlag(url) {
   const fair = ALL_FAIRS.find(f => f.url === url);
   if (!fair) return;
   if (officialFlag(fair)) {
-    showToast('Já está marcado oficialmente em decisions.json.');
+    showToast('Já está marcada oficialmente em decisions.json.');
     return;
   }
   if (draftFlag(fair)) {
     delete DRAFTS[url];
     saveDrafts();
-    showToast('Removido (só neste navegador).');
+    showToast('Removida (só neste navegador).');
   } else {
     DRAFTS[url] = true;
     saveDrafts();
@@ -215,12 +243,21 @@ function populateFilterOptions() {
     const city = guessCity(f.venue);
     if (city) cities.add(city);
   });
+
   const monthSel = document.getElementById('monthFilter');
   Array.from(months.entries()).sort().forEach(([key, label]) => {
     const opt = document.createElement('option');
     opt.value = key; opt.textContent = label;
     monthSel.appendChild(opt);
   });
+
+  const nicheSel = document.getElementById('nicheFilter');
+  NICHE_RULES.concat([OTHER_NICHE]).forEach(rule => {
+    const opt = document.createElement('option');
+    opt.value = rule.key; opt.textContent = rule.label;
+    nicheSel.appendChild(opt);
+  });
+
   const cityList = document.getElementById('cityOptions');
   Array.from(cities).sort().forEach(city => {
     const opt = document.createElement('option');
@@ -231,6 +268,7 @@ function populateFilterOptions() {
 
 function applyFilters() {
   const month = document.getElementById('monthFilter').value;
+  const niche = document.getElementById('nicheFilter').value;
   const cityQuery = document.getElementById('cityFilter').value.trim().toLowerCase();
   const flaggedOnly = document.getElementById('flaggedOnly').checked;
 
@@ -240,6 +278,7 @@ function applyFilters() {
       const key = s ? `${s.year}-${String(s.month).padStart(2,'0')}` : null;
       if (key !== month) return false;
     }
+    if (niche !== 'all' && classifyNiche(f.name).key !== niche) return false;
     if (cityQuery) {
       const city = (guessCity(f.venue) || '').toLowerCase();
       if (!city.includes(cityQuery)) return false;
@@ -250,16 +289,16 @@ function applyFilters() {
 
   renderRows(filtered);
   renderSummary(filtered);
-  document.getElementById('resultCount').textContent = `${filtered.length} shown`;
+  document.getElementById('resultCount').textContent = `${filtered.length} exibidas`;
 }
 
 function renderSummary(fairs) {
   let flagged = 0;
   fairs.forEach(f => { if (isFlagged(f)) flagged++; });
   document.getElementById('summary').innerHTML = `
-    <div class="stat"><div class="n">${fairs.length}</div><div class="l">Found</div></div>
-    <div class="stat flag"><div class="n">${flagged}</div><div class="l">Flagged</div></div>
-    <div class="stat"><div class="n">${fairs.length - flagged}</div><div class="l">Not reviewed</div></div>
+    <div class="stat"><div class="n">${fairs.length}</div><div class="l">Encontradas</div></div>
+    <div class="stat flag"><div class="n">${flagged}</div><div class="l">Marcadas</div></div>
+    <div class="stat"><div class="n">${fairs.length - flagged}</div><div class="l">Não revisadas</div></div>
   `;
 }
 
@@ -267,7 +306,7 @@ function interestCellHTML(fair) {
   const official = officialFlag(fair);
   const draft = draftFlag(fair);
   const cls = official ? 'official' : (draft ? 'draft' : '');
-  const label = official ? 'Flagged' : (draft ? 'Flagged (unsaved)' : 'Not reviewed');
+  const label = official ? 'Marcada' : (draft ? 'Marcada (não salva)' : 'Não revisada');
   const d = decisionFor(fair);
   const safeUrl = (fair.url || '').replace(/'/g, "\\'");
   return `
@@ -284,19 +323,25 @@ function interestCellHTML(fair) {
 function renderRows(fairs) {
   const rowsEl = document.getElementById('rows');
   if (fairs.length === 0) {
-    rowsEl.innerHTML = '<div class="empty">No fairs match the current filters.</div>';
+    rowsEl.innerHTML = '<div class="empty">Nenhuma feira corresponde aos filtros atuais.</div>';
     return;
   }
-  rowsEl.innerHTML = fairs.map(f => `
+  rowsEl.innerHTML = fairs.map(f => {
+    const niche = classifyNiche(f.name);
+    return `
     <div class="row">
-      <a class="fair-name" href="${f.url || '#'}" target="_blank" rel="noopener">
-        ${escapeHTML(f.name || 'Untitled fair')} <span class="arrow">&#8599;</span>
-      </a>
+      <div>
+        <a class="fair-name" href="${f.url || '#'}" target="_blank" rel="noopener">
+          ${escapeHTML(f.name || 'Untitled fair')} <span class="arrow">&#8599;</span>
+        </a>
+        <div><span class="niche-tag">${escapeHTML(niche.label)}</span></div>
+      </div>
       <div class="dates">${escapeHTML(f.dates || '&mdash;')}</div>
       <div class="venue">${escapeHTML(f.venue || '&mdash;')}</div>
       <div>${interestCellHTML(f)}</div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 }
 
 async function init() {
@@ -307,14 +352,14 @@ async function init() {
   ]);
 
   if (!fairsData) {
-    document.getElementById('rows').innerHTML = '<div class="empty">Could not load data/fairs.json. Has the scraper been run yet?</div>';
+    document.getElementById('rows').innerHTML = '<div class="empty">Não foi possível carregar data/fairs.json. O scraper já foi executado?</div>';
     return;
   }
 
   DECISIONS = decisions || {};
   ALL_FAIRS = fairsData.fairs || [];
 
-  document.getElementById('pageTitle').textContent = 'China Trade Fair Radar';
+  document.getElementById('pageTitle').textContent = 'Radar de Feiras Comerciais na China';
   document.getElementById('updatedAt').textContent = fmtUpdated(fairsData.last_updated);
 
   const now = new Date();
@@ -323,6 +368,7 @@ async function init() {
   populateFilterOptions();
 
   document.getElementById('monthFilter').addEventListener('change', applyFilters);
+  document.getElementById('nicheFilter').addEventListener('change', applyFilters);
   document.getElementById('cityFilter').addEventListener('input', applyFilters);
   document.getElementById('flaggedOnly').addEventListener('change', applyFilters);
 
