@@ -8,40 +8,51 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0D0D0D; --panel: #1A1A1A; --panel-alt: #212121; --hairline: #2E2E2E;
-    --yellow: #F5C518; --maroon: #6B1F1F; --text: #F2F2F0; --text-dim: #9A9A98; --text-faint: #6B6B69;
+    --bg: #0D0D0D; --bg-soft: #111111; --panel: #1A1A1A; --panel-alt: #212121; --hairline: #2A2A2A;
+    --yellow: #F5C518; --yellow-soft: rgba(245, 197, 24, 0.12); --maroon: #6B1F1F;
+    --text: #F2F2F0; --text-dim: #9A9A98; --text-faint: #6B6B69;
   }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  body {
+    margin: 0; color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased;
+    background: radial-gradient(1100px 500px at 15% -10%, #1c1a10 0%, transparent 60%), var(--bg);
+  }
   a { color: inherit; }
-  .wrap { max-width: 1150px; margin: 0 auto; padding: 40px 24px 80px; }
+  .wrap { max-width: 1150px; margin: 0 auto; padding: 44px 24px 90px; }
 
-  .header { display: flex; align-items: flex-end; gap: 28px; flex-wrap: wrap; border-bottom: 1px solid var(--hairline); padding-bottom: 28px; margin-bottom: 24px; }
-  .month-tile { line-height: 0.85; }
-  .month-tile .num { font-family: 'Archivo Black', sans-serif; font-size: 64px; color: var(--yellow); letter-spacing: -2px; }
-  .month-tile .rule { height: 4px; width: 64px; background: var(--maroon); margin-top: 10px; }
+  .header { display: flex; align-items: center; gap: 26px; flex-wrap: wrap; border-bottom: 1px solid var(--hairline); padding-bottom: 30px; margin-bottom: 26px; }
+  .logo { height: 58px; width: auto; display: block; }
   .header-text { flex: 1; min-width: 240px; }
-  .eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); margin: 0 0 6px; }
-  h1 { font-family: 'Archivo Black', sans-serif; font-size: 26px; margin: 0 0 8px; letter-spacing: -0.5px; }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--yellow); margin: 0 0 8px; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .eyebrow::before { content: ""; width: 14px; height: 2px; background: var(--maroon); display: inline-block; }
+  h1 { font-family: 'Archivo Black', sans-serif; font-size: 27px; margin: 0 0 8px; letter-spacing: -0.5px; }
   .updated { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--text-faint); }
 
-  .filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+  .filters {
+    display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 26px;
+    background: var(--bg-soft); border: 1px solid var(--hairline); border-radius: 8px; padding: 12px;
+  }
   select, input[type="text"], .toggle {
     background: var(--panel); color: var(--text); border: 1px solid var(--hairline);
-    padding: 9px 12px; font-family: 'Inter', sans-serif; font-size: 13px; border-radius: 3px;
+    padding: 9px 12px; font-family: 'Inter', sans-serif; font-size: 13px; border-radius: 5px;
   }
-  select, input[type="text"] { cursor: pointer; min-width: 160px; }
+  select, input[type="text"] { cursor: pointer; min-width: 160px; transition: border-color 0.15s ease; }
+  select:hover, input[type="text"]:hover { border-color: #444; }
   input[type="text"] { cursor: text; }
   input[type="text"]::placeholder { color: var(--text-faint); }
   .toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
   .toggle input { accent-color: var(--yellow); width: 15px; height: 15px; cursor: pointer; }
-  .result-count { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--text-faint); margin-left: auto; }
+  .result-count { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--text-faint); margin-left: auto; padding-right: 4px; }
 
-  .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); margin-bottom: 28px; }
-  .stat { background: var(--panel); padding: 16px 20px; }
-  .stat .n { font-family: 'Archivo Black', sans-serif; font-size: 28px; color: var(--text); }
+  .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); border-radius: 8px; overflow: hidden; margin-bottom: 30px; }
+  .stat { background: var(--panel); padding: 18px 22px; }
+  .stat .n { font-family: 'Archivo Black', sans-serif; font-size: 30px; color: var(--text); line-height: 1; }
+  .stat.flag { background: linear-gradient(180deg, var(--yellow-soft), var(--panel) 60%); }
   .stat.flag .n { color: var(--yellow); }
-  .stat .l { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+  .stat .l { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-top: 6px; }
 
   .table-head { display: grid; grid-template-columns: 2.1fr 1.2fr 1.4fr 0.9fr; gap: 16px; padding: 0 20px 12px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-faint); border-bottom: 1px solid var(--hairline); }
   .row { display: grid; grid-template-columns: 2.1fr 1.2fr 1.4fr 0.9fr; gap: 16px; padding: 18px 20px; border-bottom: 1px solid var(--hairline); align-items: center; transition: background 0.15s ease; }
@@ -50,23 +61,26 @@
   .fair-name:hover { color: var(--yellow); }
   .fair-name .arrow { font-size: 13px; color: var(--text-faint); }
   .niche-tag {
-    display: inline-block; margin-top: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 10px;
-    letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-faint);
-    border: 1px solid var(--hairline); border-radius: 2px; padding: 3px 7px;
+    display: inline-block; margin-top: 7px; font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+    letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-dim);
+    border: 1px solid var(--hairline); background: var(--panel-alt); border-radius: 3px; padding: 3px 8px;
   }
   .dates, .venue { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--text-dim); }
   .venue { font-family: 'Inter', sans-serif; }
 
-  .interest-cell { display: flex; align-items: center; gap: 10px; }
+  .interest-cell { display: flex; align-items: center; gap: 12px; }
   .flag-btn {
-    background: var(--panel-alt); border: 1px solid var(--hairline); border-radius: 6px;
-    width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
-    cursor: pointer; font-size: 16px; flex-shrink: 0; transition: transform 0.1s ease, border-color 0.15s ease;
-    filter: grayscale(1) opacity(0.5);
+    background: var(--panel-alt); border: 1px solid var(--hairline); border-radius: 8px;
+    width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; flex-shrink: 0; transition: transform 0.12s ease, border-color 0.15s ease, background 0.15s ease;
+    padding: 0;
   }
-  .flag-btn:hover { transform: scale(1.08); }
-  .flag-btn.official { background: var(--yellow); border-color: var(--yellow); filter: none; }
-  .flag-btn.draft { border-color: var(--yellow); border-style: dashed; filter: none; opacity: 0.9; }
+  .flag-btn img { width: 20px; height: 20px; object-fit: contain; filter: grayscale(1) opacity(0.45); transition: filter 0.15s ease; }
+  .flag-btn:hover { transform: scale(1.08); border-color: #444; }
+  .flag-btn.official { background: var(--yellow-soft); border-color: var(--yellow); }
+  .flag-btn.official img { filter: none; }
+  .flag-btn.draft { border-color: var(--yellow); border-style: dashed; }
+  .flag-btn.draft img { filter: none; opacity: 0.85; }
   .interest-text { display: flex; flex-direction: column; gap: 2px; }
   .interest-label { font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-faint); }
   .interest-label.on { color: var(--yellow); }
@@ -75,17 +89,17 @@
   .toast {
     position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
     background: var(--panel-alt); border: 1px solid var(--yellow); color: var(--text);
-    padding: 10px 18px; border-radius: 4px; font-size: 13px; font-family: 'Inter', sans-serif;
+    padding: 11px 20px; border-radius: 6px; font-size: 13px; font-family: 'Inter', sans-serif;
     opacity: 0; transition: opacity 0.2s ease, transform 0.2s ease; pointer-events: none; z-index: 10;
-    max-width: 90vw; text-align: center;
+    max-width: 90vw; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
   .empty, .loading { padding: 60px 20px; text-align: center; color: var(--text-faint); font-family: 'IBM Plex Mono', monospace; font-size: 13px; }
-  footer { margin-top: 40px; font-size: 12px; color: var(--text-faint); font-family: 'IBM Plex Mono', monospace; }
+  footer { margin-top: 44px; font-size: 12px; color: var(--text-faint); font-family: 'IBM Plex Mono', monospace; line-height: 1.6; }
 
   @media (max-width: 780px) {
-    .month-tile .num { font-size: 48px; }
+    .logo { height: 44px; }
     .summary { grid-template-columns: repeat(3, 1fr); }
     .table-head { display: none; }
     .row { grid-template-columns: 1fr; gap: 6px; padding: 16px 4px; }
@@ -101,9 +115,9 @@
   <div class="wrap">
 
     <div class="header">
-      <div class="month-tile"><div class="num" id="monthNum">--</div><div class="rule"></div></div>
+      <img class="logo" src="assets/logo-12p.png" alt="Logo 12P" />
       <div class="header-text">
-        <p class="eyebrow">12P &middot; Radar de Feiras na China</p>
+        <p class="eyebrow">Radar de Feiras na China</p>
         <h1 id="pageTitle">Carregando&hellip;</h1>
         <p class="updated" id="updatedAt">Verificando última atualização&hellip;</p>
       </div>
@@ -121,7 +135,7 @@
     <div class="summary" id="summary">
       <div class="stat"><div class="n">&mdash;</div><div class="l">Encontradas</div></div>
       <div class="stat flag"><div class="n">&mdash;</div><div class="l">Marcadas</div></div>
-      <div class="stat"><div class="n">&mdash;</div><div class="l">Não revisadas</div></div>
+      <div class="stat"><div class="n">&mdash;</div><div class="l">Cidades</div></div>
     </div>
 
     <div class="table-head"><div>Feira</div><div>Datas</div><div>Local</div><div>Interesse</div></div>
@@ -143,8 +157,6 @@ let ALL_FAIRS = [];
 let DECISIONS = {};
 let DRAFTS = {};
 
-// ---- Classificação de nicho por palavras-chave no nome da feira ----
-// Ordem importa: a primeira categoria cuja palavra-chave aparecer no nome vence.
 const NICHE_RULES = [
   { key: "food-agro", label: "Alimentos e Agricultura", words: ["food","agri","agriculture","farm","seafood","meat","dairy","snack","drink","beverage","tea","coffee","fruit","vegetable","grain","sugar","ice cream","bakery","catering","nutrition","fisheries"] },
   { key: "home-build", label: "Casa, Cozinha e Construção", words: ["kitchen","bathroom","home","house","furniture","furnishing","building","construction","hardware","ceramic","sanitary","décor","decor","interior","real estate","architecture"] },
@@ -294,11 +306,16 @@ function applyFilters() {
 
 function renderSummary(fairs) {
   let flagged = 0;
-  fairs.forEach(f => { if (isFlagged(f)) flagged++; });
+  const cities = new Set();
+  fairs.forEach(f => {
+    if (isFlagged(f)) flagged++;
+    const c = guessCity(f.venue);
+    if (c) cities.add(c);
+  });
   document.getElementById('summary').innerHTML = `
     <div class="stat"><div class="n">${fairs.length}</div><div class="l">Encontradas</div></div>
     <div class="stat flag"><div class="n">${flagged}</div><div class="l">Marcadas</div></div>
-    <div class="stat"><div class="n">${fairs.length - flagged}</div><div class="l">Não revisadas</div></div>
+    <div class="stat"><div class="n">${cities.size}</div><div class="l">Cidades</div></div>
   `;
 }
 
@@ -311,7 +328,9 @@ function interestCellHTML(fair) {
   const safeUrl = (fair.url || '').replace(/'/g, "\\'");
   return `
     <div class="interest-cell">
-      <button class="flag-btn ${cls}" onclick="toggleFlag('${safeUrl}')" title="${label}">&#x1F6A9;</button>
+      <button class="flag-btn ${cls}" onclick="toggleFlag('${safeUrl}')" title="${label}">
+        <img src="assets/china-flag.png" alt="Bandeira da China" />
+      </button>
       <div class="interest-text">
         <span class="interest-label ${official || draft ? 'on' : ''}">${label}</span>
         ${d && d.note ? `<span class="note">${escapeHTML(d.note)}</span>` : ''}
@@ -361,9 +380,6 @@ async function init() {
 
   document.getElementById('pageTitle').textContent = 'Radar de Feiras Comerciais na China';
   document.getElementById('updatedAt').textContent = fmtUpdated(fairsData.last_updated);
-
-  const now = new Date();
-  document.getElementById('monthNum').textContent = String(now.getMonth() + 1).padStart(2, '0');
 
   populateFilterOptions();
 
