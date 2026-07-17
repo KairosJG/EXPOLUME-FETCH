@@ -8,15 +8,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0D0D0D;
-    --panel: #1A1A1A;
-    --panel-alt: #212121;
-    --hairline: #2E2E2E;
-    --yellow: #F5C518;
-    --maroon: #6B1F1F;
-    --text: #F2F2F0;
-    --text-dim: #9A9A98;
-    --text-faint: #6B6B69;
+    --bg: #0D0D0D; --panel: #1A1A1A; --panel-alt: #212121; --hairline: #2E2E2E;
+    --yellow: #F5C518; --maroon: #6B1F1F; --text: #F2F2F0; --text-dim: #9A9A98; --text-faint: #6B6B69;
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
@@ -24,7 +17,7 @@
   .wrap { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
 
   .header { display: flex; align-items: flex-end; gap: 28px; flex-wrap: wrap; border-bottom: 1px solid var(--hairline); padding-bottom: 28px; margin-bottom: 24px; }
-  .month-tile { position: relative; line-height: 0.85; }
+  .month-tile { line-height: 0.85; }
   .month-tile .num { font-family: 'Archivo Black', sans-serif; font-size: 64px; color: var(--yellow); letter-spacing: -2px; }
   .month-tile .rule { height: 4px; width: 64px; background: var(--maroon); margin-top: 10px; }
   .header-text { flex: 1; min-width: 240px; }
@@ -32,39 +25,55 @@
   h1 { font-family: 'Archivo Black', sans-serif; font-size: 26px; margin: 0 0 8px; letter-spacing: -0.5px; }
   .updated { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--text-faint); }
 
-  /* ---- Filter bar ---- */
   .filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
-  select, .toggle {
+  select, input[type="text"], .toggle {
     background: var(--panel); color: var(--text); border: 1px solid var(--hairline);
     padding: 9px 12px; font-family: 'Inter', sans-serif; font-size: 13px; border-radius: 3px;
   }
-  select { cursor: pointer; min-width: 150px; }
+  select, input[type="text"] { cursor: pointer; min-width: 160px; }
+  input[type="text"] { cursor: text; }
+  input[type="text"]::placeholder { color: var(--text-faint); }
   .toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
   .toggle input { accent-color: var(--yellow); width: 15px; height: 15px; cursor: pointer; }
   .result-count { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--text-faint); margin-left: auto; }
 
-  /* ---- Summary strip ---- */
   .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); margin-bottom: 28px; }
   .stat { background: var(--panel); padding: 16px 20px; }
   .stat .n { font-family: 'Archivo Black', sans-serif; font-size: 28px; color: var(--text); }
   .stat.flag .n { color: var(--yellow); }
   .stat .l { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
 
-  /* ---- Table ---- */
-  .table-head { display: grid; grid-template-columns: 2fr 1.3fr 1.5fr 0.8fr; gap: 16px; padding: 0 20px 12px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-faint); border-bottom: 1px solid var(--hairline); }
-  .row { display: grid; grid-template-columns: 2fr 1.3fr 1.5fr 0.8fr; gap: 16px; padding: 18px 20px; border-bottom: 1px solid var(--hairline); align-items: center; transition: background 0.15s ease; }
+  .table-head { display: grid; grid-template-columns: 2fr 1.3fr 1.5fr 0.9fr; gap: 16px; padding: 0 20px 12px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-faint); border-bottom: 1px solid var(--hairline); }
+  .row { display: grid; grid-template-columns: 2fr 1.3fr 1.5fr 0.9fr; gap: 16px; padding: 18px 20px; border-bottom: 1px solid var(--hairline); align-items: center; transition: background 0.15s ease; }
   .row:hover { background: var(--panel); }
   .fair-name { font-weight: 600; font-size: 15px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
   .fair-name:hover { color: var(--yellow); }
   .fair-name .arrow { font-size: 13px; color: var(--text-faint); }
   .dates, .venue { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--text-dim); }
   .venue { font-family: 'Inter', sans-serif; }
-  .flag-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; padding: 5px 10px; border-radius: 2px; white-space: nowrap; }
-  .flag-badge.on { background: var(--yellow); color: #14140E; }
-  .flag-badge.off { background: var(--panel-alt); color: var(--text-faint); border: 1px solid var(--hairline); }
-  .note { font-size: 12px; color: var(--text-faint); margin-top: 4px; }
-  .copy-btn { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--text-faint); background: none; border: 1px solid var(--hairline); border-radius: 2px; padding: 3px 6px; margin-top: 6px; cursor: pointer; display: block; }
-  .copy-btn:hover { color: var(--yellow); border-color: var(--yellow); }
+
+  .interest-cell { display: flex; align-items: center; gap: 10px; }
+  .flag-btn {
+    background: var(--panel-alt); border: 1px solid var(--hairline); border-radius: 6px;
+    width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 16px; flex-shrink: 0; transition: transform 0.1s ease, border-color 0.15s ease;
+    filter: grayscale(1) opacity(0.5);
+  }
+  .flag-btn:hover { transform: scale(1.08); }
+  .flag-btn.official { background: var(--yellow); border-color: var(--yellow); filter: none; }
+  .flag-btn.draft { border-color: var(--yellow); border-style: dashed; filter: none; opacity: 0.9; }
+  .interest-text { display: flex; flex-direction: column; gap: 2px; }
+  .interest-label { font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-faint); }
+  .interest-label.on { color: var(--yellow); }
+  .note { font-size: 12px; color: var(--text-faint); }
+
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--panel-alt); border: 1px solid var(--yellow); color: var(--text);
+    padding: 10px 18px; border-radius: 4px; font-size: 13px; font-family: 'Inter', sans-serif;
+    opacity: 0; transition: opacity 0.2s ease, transform 0.2s ease; pointer-events: none; z-index: 10;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
   .empty, .loading { padding: 60px 20px; text-align: center; color: var(--text-faint); font-family: 'IBM Plex Mono', monospace; font-size: 13px; }
   footer { margin-top: 40px; font-size: 12px; color: var(--text-faint); font-family: 'IBM Plex Mono', monospace; }
@@ -86,10 +95,7 @@
   <div class="wrap">
 
     <div class="header">
-      <div class="month-tile">
-        <div class="num" id="monthNum">--</div>
-        <div class="rule"></div>
-      </div>
+      <div class="month-tile"><div class="num" id="monthNum">--</div><div class="rule"></div></div>
       <div class="header-text">
         <p class="eyebrow">12P &middot; China Trade Fair Radar</p>
         <h1 id="pageTitle">Loading&hellip;</h1>
@@ -99,7 +105,8 @@
 
     <div class="filters">
       <select id="monthFilter"><option value="all">All months</option></select>
-      <select id="cityFilter"><option value="all">All cities</option></select>
+      <input type="text" id="cityFilter" list="cityOptions" placeholder="Type a city..." autocomplete="off" />
+      <datalist id="cityOptions"></datalist>
       <label class="toggle"><input type="checkbox" id="flaggedOnly" /> Show only flagged</label>
       <span class="result-count" id="resultCount"></span>
     </div>
@@ -110,31 +117,37 @@
       <div class="stat"><div class="n">&mdash;</div><div class="l">Not reviewed</div></div>
     </div>
 
-    <div class="table-head">
-      <div>Fair</div>
-      <div>Dates</div>
-      <div>Venue</div>
-      <div>Interest</div>
-    </div>
-
+    <div class="table-head"><div>Fair</div><div>Dates</div><div>Venue</div><div>Interest</div></div>
     <div id="rows"><div class="loading">Fetching data/fairs.json&hellip;</div></div>
 
     <footer>
-      Data refreshed periodically from Expolume. Mark interest by editing <code>data/decisions.json</code> &mdash; use the "copy entry" button on a fair to get a ready-to-paste snippet.
+      Data refreshed periodically from Expolume. Click the flag to mark interest &mdash;
+      it copies a ready-to-paste snippet for <code>data/decisions.json</code>. A dashed flag
+      means it's only saved in this browser; paste + commit to make it official and visible
+      to everyone.
     </footer>
   </div>
 
+  <div class="toast" id="toast"></div>
+
 <script>
 const MONTH_NAMES = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const LOCAL_KEY = 'china_fair_radar_drafts_v1';
 let ALL_FAIRS = [];
 let DECISIONS = {};
+let DRAFTS = {};
 
 async function loadJSON(path) {
-  try {
-    const res = await fetch(path, { cache: "no-store" });
-    if (!res.ok) return null;
-    return await res.json();
-  } catch (e) { return null; }
+  try { const res = await fetch(path, { cache: "no-store" }); return res.ok ? await res.json() : null; }
+  catch (e) { return null; }
+}
+
+function loadDrafts() {
+  try { DRAFTS = JSON.parse(localStorage.getItem(LOCAL_KEY) || '{}'); }
+  catch (e) { DRAFTS = {}; }
+}
+function saveDrafts() {
+  try { localStorage.setItem(LOCAL_KEY, JSON.stringify(DRAFTS)); } catch (e) {}
 }
 
 function fmtUpdated(iso) {
@@ -142,79 +155,84 @@ function fmtUpdated(iso) {
   const d = new Date(iso);
   return "Last updated " + d.toLocaleString(undefined, { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
 }
-
 function escapeHTML(str) {
   const div = document.createElement('div');
   div.textContent = str == null ? '' : str;
   return div.innerHTML;
 }
-
-// Parses "Aug 13, 2026 To Aug 15, 2026" -> {year, month(1-12), monthKey: "2026-08"}
 function parseStart(datesStr) {
   if (!datesStr) return null;
-  const first = datesStr.split(" To ")[0].trim();
-  const d = new Date(first);
-  if (isNaN(d)) return null;
-  return { year: d.getFullYear(), month: d.getMonth() + 1 };
+  const d = new Date(datesStr.split(" To ")[0].trim());
+  return isNaN(d) ? null : { year: d.getFullYear(), month: d.getMonth() + 1 };
 }
-
-// Heuristic: the city is usually the first word of the venue string
-// (e.g. "Xian International Convention..." -> "Xian"). Good enough for
-// a filter dropdown; not claiming perfect accuracy on every venue name.
+// Heuristic: city is usually the venue's first word (e.g. "Xian International..." -> "Xian").
 function guessCity(venue) {
   if (!venue) return null;
-  const firstWord = venue.trim().split(/\s+/)[0];
-  return firstWord || null;
+  return venue.trim().split(/\s+/)[0] || null;
 }
 
-function decisionFor(fair) {
-  return DECISIONS[fair.url] || DECISIONS[fair.name] || null;
+function decisionFor(fair) { return DECISIONS[fair.url] || DECISIONS[fair.name] || null; }
+function officialFlag(fair) { const d = decisionFor(fair); return !!(d && d.flagged); }
+function draftFlag(fair) { return !!DRAFTS[fair.url]; }
+function isFlagged(fair) { return officialFlag(fair) || draftFlag(fair); }
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => t.classList.remove('show'), 2600);
 }
 
-function isFlagged(fair) {
-  const d = decisionFor(fair);
-  return !!(d && d.flagged);
+function toggleFlag(url) {
+  const fair = ALL_FAIRS.find(f => f.url === url);
+  if (!fair) return;
+  if (officialFlag(fair)) {
+    showToast('Já está marcado oficialmente em decisions.json.');
+    return;
+  }
+  if (draftFlag(fair)) {
+    delete DRAFTS[url];
+    saveDrafts();
+    showToast('Removido (só neste navegador).');
+  } else {
+    DRAFTS[url] = true;
+    saveDrafts();
+    const snippet = `"${url}": {\n  "flagged": true,\n  "note": ""\n},`;
+    navigator.clipboard.writeText(snippet).catch(() => {});
+    showToast('Copiado! Cole em data/decisions.json e faça commit para salvar de vez.');
+  }
+  applyFilters();
 }
+window.toggleFlag = toggleFlag;
 
 function populateFilterOptions() {
-  const months = new Map(); // key "2026-08" -> label "August 2026"
+  const months = new Map();
   const cities = new Set();
-
   ALL_FAIRS.forEach(f => {
     const s = parseStart(f.dates);
-    if (s) {
-      const key = `${s.year}-${String(s.month).padStart(2,'0')}`;
-      months.set(key, `${MONTH_NAMES[s.month-1]} ${s.year}`);
-    }
+    if (s) months.set(`${s.year}-${String(s.month).padStart(2,'0')}`, `${MONTH_NAMES[s.month-1]} ${s.year}`);
     const city = guessCity(f.venue);
     if (city) cities.add(city);
   });
-
   const monthSel = document.getElementById('monthFilter');
   Array.from(months.entries()).sort().forEach(([key, label]) => {
     const opt = document.createElement('option');
     opt.value = key; opt.textContent = label;
     monthSel.appendChild(opt);
   });
-
-  const citySel = document.getElementById('cityFilter');
+  const cityList = document.getElementById('cityOptions');
   Array.from(cities).sort().forEach(city => {
     const opt = document.createElement('option');
-    opt.value = city; opt.textContent = city;
-    citySel.appendChild(opt);
+    opt.value = city;
+    cityList.appendChild(opt);
   });
 }
 
-function currentFilters() {
-  return {
-    month: document.getElementById('monthFilter').value,
-    city: document.getElementById('cityFilter').value,
-    flaggedOnly: document.getElementById('flaggedOnly').checked,
-  };
-}
-
 function applyFilters() {
-  const { month, city, flaggedOnly } = currentFilters();
+  const month = document.getElementById('monthFilter').value;
+  const cityQuery = document.getElementById('cityFilter').value.trim().toLowerCase();
+  const flaggedOnly = document.getElementById('flaggedOnly').checked;
 
   const filtered = ALL_FAIRS.filter(f => {
     if (month !== 'all') {
@@ -222,7 +240,10 @@ function applyFilters() {
       const key = s ? `${s.year}-${String(s.month).padStart(2,'0')}` : null;
       if (key !== month) return false;
     }
-    if (city !== 'all' && guessCity(f.venue) !== city) return false;
+    if (cityQuery) {
+      const city = (guessCity(f.venue) || '').toLowerCase();
+      if (!city.includes(cityQuery)) return false;
+    }
     if (flaggedOnly && !isFlagged(f)) return false;
     return true;
   });
@@ -242,18 +263,23 @@ function renderSummary(fairs) {
   `;
 }
 
-function flagBadgeHTML(fair) {
+function interestCellHTML(fair) {
+  const official = officialFlag(fair);
+  const draft = draftFlag(fair);
+  const cls = official ? 'official' : (draft ? 'draft' : '');
+  const label = official ? 'Flagged' : (draft ? 'Flagged (unsaved)' : 'Not reviewed');
   const d = decisionFor(fair);
-  const flagged = isFlagged(fair);
-  return `<span class="flag-badge ${flagged ? 'on' : 'off'}">${flagged ? '★ Flagged' : 'Not reviewed'}</span>` +
-         (d && d.note ? `<div class="note">${escapeHTML(d.note)}</div>` : '');
+  const safeUrl = (fair.url || '').replace(/'/g, "\\'");
+  return `
+    <div class="interest-cell">
+      <button class="flag-btn ${cls}" onclick="toggleFlag('${safeUrl}')" title="${label}">&#x1F6A9;</button>
+      <div class="interest-text">
+        <span class="interest-label ${official || draft ? 'on' : ''}">${label}</span>
+        ${d && d.note ? `<span class="note">${escapeHTML(d.note)}</span>` : ''}
+      </div>
+    </div>
+  `;
 }
-
-function copySnippet(url) {
-  const snippet = `"${url}": {\n  "flagged": true,\n  "note": ""\n},`;
-  navigator.clipboard.writeText(snippet).catch(() => {});
-}
-window.copySnippet = copySnippet;
 
 function renderRows(fairs) {
   const rowsEl = document.getElementById('rows');
@@ -268,15 +294,13 @@ function renderRows(fairs) {
       </a>
       <div class="dates">${escapeHTML(f.dates || '&mdash;')}</div>
       <div class="venue">${escapeHTML(f.venue || '&mdash;')}</div>
-      <div>
-        ${flagBadgeHTML(f)}
-        <button class="copy-btn" onclick="copySnippet('${(f.url||'').replace(/'/g,"\\'")}')">copy entry</button>
-      </div>
+      <div>${interestCellHTML(f)}</div>
     </div>
   `).join('');
 }
 
 async function init() {
+  loadDrafts();
   const [fairsData, decisions] = await Promise.all([
     loadJSON('data/fairs.json'),
     loadJSON('data/decisions.json')
@@ -293,15 +317,13 @@ async function init() {
   document.getElementById('pageTitle').textContent = 'China Trade Fair Radar';
   document.getElementById('updatedAt').textContent = fmtUpdated(fairsData.last_updated);
 
-  // Month tile shows the current month at page-load time (just a visual anchor,
-  // actual filtering is controlled by the dropdown below)
   const now = new Date();
   document.getElementById('monthNum').textContent = String(now.getMonth() + 1).padStart(2, '0');
 
   populateFilterOptions();
 
   document.getElementById('monthFilter').addEventListener('change', applyFilters);
-  document.getElementById('cityFilter').addEventListener('change', applyFilters);
+  document.getElementById('cityFilter').addEventListener('input', applyFilters);
   document.getElementById('flaggedOnly').addEventListener('change', applyFilters);
 
   applyFilters();
