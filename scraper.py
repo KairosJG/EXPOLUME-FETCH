@@ -192,12 +192,42 @@ def fetch_all_fairs(start_str, end_str, page_size=500, max_pages=10):
     return all_fairs, last_url_used
 
 
+def parse_single_date(date_str):
+    try:
+        return datetime.strptime(date_str.strip(), "%b %d, %Y")
+    except (ValueError, AttributeError):
+        return None
+
+
+def is_already_past(fair, today):
+    """
+    Returns True if this fair's date range is entirely in the past.
+    If we can't parse a date at all, we keep the fair rather than risk
+    silently dropping something we just don't understand the format of.
+    """
+    dates_str = fair.get("dates")
+    if not dates_str:
+        return False
+    end_str = dates_str.split(" To ")[-1]
+    end_date = parse_single_date(end_str)
+    if end_date is None:
+        return False
+    return end_date.date() < today
+
+
 def main():
     start_str, end_str = get_date_range(months_ahead=6)
     print(f"Requesting China fairs from {start_str} to {end_str}")
 
     fairs, search_url = fetch_all_fairs(start_str, end_str)
     print(f"Found {len(fairs)} fairs total (all pages combined)")
+
+    today = datetime.now(timezone.utc).date()
+    before_count = len(fairs)
+    fairs = [f for f in fairs if not is_already_past(f, today)]
+    dropped = before_count - len(fairs)
+    if dropped:
+        print(f"Dropped {dropped} fair(s) whose dates have already passed")
 
     if not fairs:
         print("No fairs extracted.")
