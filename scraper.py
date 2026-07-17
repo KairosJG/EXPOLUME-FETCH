@@ -31,22 +31,29 @@ DATE_PATTERN = re.compile(
 )
 
 
-def get_target_month():
+def get_date_range(months_ahead=6):
     """
-    Default: NEXT calendar month (since the whole point is to have next
-    month's shortlist ready before the current month ends). Change this
-    function if you'd rather target the current month instead.
+    Returns (start_str, end_str) covering from the 1st of the current month
+    through the end of `months_ahead` months from now. We scrape this whole
+    window in one request; the dashboard itself handles filtering down to
+    a specific month, so the scraper doesn't need to run separately per
+    month anymore.
     """
     now = datetime.now(timezone.utc)
-    year = now.year + (1 if now.month == 12 else 0)
-    month = 1 if now.month == 12 else now.month + 1
-    return year, month
+    start = now.replace(day=1)
+
+    end_month = now.month + months_ahead
+    end_year = now.year
+    while end_month > 12:
+        end_month -= 12
+        end_year += 1
+    last_day = calendar.monthrange(end_year, end_month)[1]
+    end = datetime(end_year, end_month, last_day, tzinfo=timezone.utc)
+
+    return start.strftime("%Y-%m-%d"), end.strftime("%Y-%m-%d")
 
 
-def build_search_url(year, month, limit=200):
-    last_day = calendar.monthrange(year, month)[1]
-    start = f"{year}-{month:02d}-01"
-    end = f"{year}-{month:02d}-{last_day}"
+def build_search_url(start_str, end_str, limit=500):
     params = {
         "vx": "1",
         "action": "search_posts",
@@ -55,7 +62,7 @@ def build_search_url(year, month, limit=200):
         "industries": "",
         "regions": "china",
         "relations": "",
-        "recurring-date": f"{start}..{end}",
+        "recurring-date": f"{start_str}..{end_str}",
         "sort": "latest",
         "limit": str(limit),
         "__template_id": "65809",
@@ -114,8 +121,8 @@ def extract_fairs_from_html(html):
     return fairs
 
 
-def fetch_html(year, month):
-    search_url = build_search_url(year, month)
+def fetch_html(start_str, end_str):
+    search_url = build_search_url(start_str, end_str)
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False, slow_mo=100)
@@ -149,10 +156,10 @@ def fetch_html(year, month):
 
 
 def main():
-    year, month = get_target_month()
-    print(f"Requesting China fairs for {year}-{month:02d}")
+    start_str, end_str = get_date_range(months_ahead=6)
+    print(f"Requesting China fairs from {start_str} to {end_str}")
 
-    html, search_url = fetch_html(year, month)
+    html, search_url = fetch_html(start_str, end_str)
     fairs = extract_fairs_from_html(html)
     print(f"Found {len(fairs)} fairs")
 
@@ -162,7 +169,7 @@ def main():
 
     data = {
         "last_updated": datetime.now(timezone.utc).isoformat(),
-        "target_month": f"{year}-{month:02d}",
+        "range": f"{start_str}..{end_str}",
         "source_url": search_url,
         "fairs": fairs,
     }

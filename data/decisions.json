@@ -1,7 +1,7 @@
 {
-  "_instructions": "Key each entry by the fair's 'url' (safest, since names can repeat) or its exact 'name'. decision must be one of: go, skip, maybe. note is optional.",
-  "https://expolume.com/expo/example-fair/": {
-    "decision": "go",
-    "note": "Matches our packaging category, good exhibitor overlap with last year"
+  "_instructions": "Key each entry by the fair's 'url'. Set flagged to true to mark it as interesting; note is optional. Use the 'copy entry' button on the dashboard to get a ready-to-paste snippet for a specific fair.",
+  "https://expolume.com/expo/china-ice-expo/": {
+    "flagged": true,
+    "note": "Strong fit for our food packaging line"
   }
 }
