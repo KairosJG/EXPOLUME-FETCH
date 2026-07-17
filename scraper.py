@@ -53,7 +53,7 @@ def get_date_range(months_ahead=6):
     return start.strftime("%Y-%m-%d"), end.strftime("%Y-%m-%d")
 
 
-def build_search_url(start_str, end_str, limit=1500):
+def build_search_url(start_str, end_str, page=1, limit=500):
     params = {
         "vx": "1",
         "action": "search_posts",
@@ -64,6 +64,7 @@ def build_search_url(start_str, end_str, limit=1500):
         "relations": "",
         "recurring-date": f"{start_str}..{end_str}",
         "sort": "latest",
+        "pg": str(page),
         "limit": str(limit),
         "__template_id": "65809",
         "__get_total_count": "1",
@@ -135,17 +136,22 @@ def extract_fairs_from_html(html):
     return fairs
 
 
-def fetch_html(start_str, end_str):
-    search_url = build_search_url(start_str, end_str)
+def fetch_all_fairs(start_str, end_str, page_size=500, max_pages=10):
+    """
+    Fetches every page of results for the given date range, merging by
+    URL to avoid duplicates. Stops when a page returns nothing new or
+    fewer than a full page (signaling we've reached the end).
+    """
+    all_fairs = []
+    seen_urls = set()
+    last_url_used = None
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False, slow_mo=100)
         context = browser.new_context()
         page = context.new_page()
 
-        # Step 1: visit the normal page once so Cloudflare's challenge
-        # gets solved and the browser context holds a valid clearance
-        # cookie for everything that follows.
+        # One-time Cloudflare warm-up.
         page.goto(WARMUP_URL, wait_until="domcontentloaded", timeout=60000)
         for _ in range(10):
             if "Just a moment" not in page.title():
@@ -153,33 +159,48 @@ def fetch_html(start_str, end_str):
             page.wait_for_timeout(2000)
         page.wait_for_timeout(1500)
 
-        # Step 2: call the search endpoint directly, using the same
-        # authenticated context (shares cookies with the page above).
-        response = context.request.get(
-            search_url,
-            headers={
-                "X-Requested-With": "XMLHttpRequest",
-                "Referer": WARMUP_URL,
-                "Accept": "*/*",
-            },
-        )
-        html = response.text()
+        for page_num in range(1, max_pages + 1):
+            search_url = build_search_url(start_str, end_str, page=page_num, limit=page_size)
+            last_url_used = search_url
+            response = context.request.get(
+                search_url,
+                headers={
+                    "X-Requested-With": "XMLHttpRequest",
+                    "Referer": WARMUP_URL,
+                    "Accept": "*/*",
+                },
+            )
+            html = response.text()
+            page_fairs = extract_fairs_from_html(html)
+
+            new_fairs = [f for f in page_fairs if f["url"] not in seen_urls]
+            print(f"  Page {page_num}: {len(page_fairs)} fairs on page, {len(new_fairs)} new")
+
+            if not new_fairs:
+                break
+
+            for f in new_fairs:
+                seen_urls.add(f["url"])
+                all_fairs.append(f)
+
+            if len(page_fairs) < page_size:
+                # Fewer than a full page means this was the last one.
+                break
 
         browser.close()
-        return html, search_url
+
+    return all_fairs, last_url_used
 
 
 def main():
     start_str, end_str = get_date_range(months_ahead=6)
     print(f"Requesting China fairs from {start_str} to {end_str}")
 
-    html, search_url = fetch_html(start_str, end_str)
-    fairs = extract_fairs_from_html(html)
-    print(f"Found {len(fairs)} fairs")
+    fairs, search_url = fetch_all_fairs(start_str, end_str)
+    print(f"Found {len(fairs)} fairs total (all pages combined)")
 
     if not fairs:
-        print("No fairs extracted. Raw response snippet:")
-        print(html[:1500])
+        print("No fairs extracted.")
 
     data = {
         "last_updated": datetime.now(timezone.utc).isoformat(),
