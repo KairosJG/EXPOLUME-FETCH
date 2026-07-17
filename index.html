@@ -21,7 +21,8 @@
   .wrap { max-width: 1150px; margin: 0 auto; padding: 44px 24px 90px; }
 
   .header { display: flex; align-items: center; gap: 26px; flex-wrap: wrap; border-bottom: 1px solid var(--hairline); padding-bottom: 30px; margin-bottom: 26px; }
-  .logo { height: 58px; width: auto; display: block; }
+  .logo { height: 58px; width: auto; display: block; cursor: pointer; transition: opacity 0.15s ease, transform 0.15s ease; }
+  .logo:hover { opacity: 0.85; transform: scale(1.02); }
   .header-text { flex: 1; min-width: 240px; }
   .eyebrow {
     font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
@@ -43,6 +44,16 @@
   select:hover, input[type="text"]:hover { border-color: #444; }
   input[type="text"] { cursor: text; }
   input[type="text"]::placeholder { color: var(--text-faint); }
+
+  .city-wrap { position: relative; display: inline-flex; align-items: center; }
+  .city-wrap input[type="text"] { padding-right: 30px; }
+  .city-clear {
+    position: absolute; right: 6px; background: none; border: none; color: var(--text-faint);
+    font-size: 15px; line-height: 1; cursor: pointer; padding: 4px 6px; border-radius: 4px;
+    display: none;
+  }
+  .city-clear:hover { color: var(--yellow); background: var(--panel-alt); }
+  .city-wrap.has-value .city-clear { display: block; }
   .toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
   .toggle input { accent-color: var(--yellow); width: 15px; height: 15px; cursor: pointer; }
   .result-count { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--text-faint); margin-left: auto; padding-right: 4px; }
@@ -115,7 +126,7 @@
   <div class="wrap">
 
     <div class="header">
-      <img class="logo" src="assets/logo-12p.png" alt="Logo 12P" />
+      <img class="logo" id="logoReset" src="assets/logo-12p.png" alt="Logo 12P — clique para limpar filtros" title="Limpar todos os filtros" />
       <div class="header-text">
         <p class="eyebrow">Radar de Feiras na China</p>
         <h1 id="pageTitle">Carregando&hellip;</h1>
@@ -126,7 +137,10 @@
     <div class="filters">
       <select id="monthFilter"><option value="all">Todos os meses</option></select>
       <select id="nicheFilter"><option value="all">Todos os nichos</option></select>
-      <input type="text" id="cityFilter" list="cityOptions" placeholder="Digite uma cidade..." autocomplete="off" />
+      <div class="city-wrap" id="cityWrap">
+        <input type="text" id="cityFilter" list="cityOptions" placeholder="Digite uma cidade..." autocomplete="off" />
+        <button class="city-clear" id="cityClear" type="button" title="Limpar cidade">&times;</button>
+      </div>
       <datalist id="cityOptions"></datalist>
       <label class="toggle"><input type="checkbox" id="flaggedOnly" /> Mostrar só marcadas</label>
       <span class="result-count" id="resultCount"></span>
@@ -423,8 +437,33 @@ async function init() {
 
   document.getElementById('monthFilter').addEventListener('change', applyFilters);
   document.getElementById('nicheFilter').addEventListener('change', applyFilters);
-  document.getElementById('cityFilter').addEventListener('input', applyFilters);
   document.getElementById('flaggedOnly').addEventListener('change', applyFilters);
+
+  const cityInput = document.getElementById('cityFilter');
+  const cityWrap = document.getElementById('cityWrap');
+  const cityClearBtn = document.getElementById('cityClear');
+
+  function updateCityWrapState() {
+    cityWrap.classList.toggle('has-value', cityInput.value.trim().length > 0);
+  }
+  cityInput.addEventListener('input', () => { updateCityWrapState(); applyFilters(); });
+  cityClearBtn.addEventListener('click', () => {
+    cityInput.value = '';
+    updateCityWrapState();
+    applyFilters();
+    cityInput.focus();
+  });
+  updateCityWrapState();
+
+  document.getElementById('logoReset').addEventListener('click', () => {
+    document.getElementById('monthFilter').value = 'all';
+    document.getElementById('nicheFilter').value = 'all';
+    document.getElementById('flaggedOnly').checked = false;
+    cityInput.value = '';
+    updateCityWrapState();
+    applyFilters();
+    showToast('Filtros limpos.');
+  });
 
   applyFilters();
 }
