@@ -13,220 +13,73 @@
     --panel-alt: #212121;
     --hairline: #2E2E2E;
     --yellow: #F5C518;
-    --yellow-dim: #C9A315;
     --maroon: #6B1F1F;
     --text: #F2F2F0;
     --text-dim: #9A9A98;
     --text-faint: #6B6B69;
   }
-
   * { box-sizing: border-box; }
-
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
-
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
   a { color: inherit; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
 
-  .wrap {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 40px 24px 80px;
-  }
-
-  /* ---- Header ---- */
-  .header {
-    display: flex;
-    align-items: flex-end;
-    gap: 28px;
-    flex-wrap: wrap;
-    border-bottom: 1px solid var(--hairline);
-    padding-bottom: 28px;
-    margin-bottom: 32px;
-  }
-
-  .month-tile {
-    position: relative;
-    line-height: 0.85;
-  }
-
-  .month-tile .num {
-    font-family: 'Archivo Black', sans-serif;
-    font-size: 84px;
-    color: var(--yellow);
-    letter-spacing: -2px;
-  }
-
-  .month-tile .rule {
-    height: 4px;
-    width: 64px;
-    background: var(--maroon);
-    margin-top: 10px;
-  }
-
+  .header { display: flex; align-items: flex-end; gap: 28px; flex-wrap: wrap; border-bottom: 1px solid var(--hairline); padding-bottom: 28px; margin-bottom: 24px; }
+  .month-tile { position: relative; line-height: 0.85; }
+  .month-tile .num { font-family: 'Archivo Black', sans-serif; font-size: 64px; color: var(--yellow); letter-spacing: -2px; }
+  .month-tile .rule { height: 4px; width: 64px; background: var(--maroon); margin-top: 10px; }
   .header-text { flex: 1; min-width: 240px; }
+  .eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); margin: 0 0 6px; }
+  h1 { font-family: 'Archivo Black', sans-serif; font-size: 26px; margin: 0 0 8px; letter-spacing: -0.5px; }
+  .updated { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--text-faint); }
 
-  .eyebrow {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin: 0 0 6px;
+  /* ---- Filter bar ---- */
+  .filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+  select, .toggle {
+    background: var(--panel); color: var(--text); border: 1px solid var(--hairline);
+    padding: 9px 12px; font-family: 'Inter', sans-serif; font-size: 13px; border-radius: 3px;
   }
-
-  h1 {
-    font-family: 'Archivo Black', sans-serif;
-    font-size: 28px;
-    margin: 0 0 8px;
-    letter-spacing: -0.5px;
-  }
-
-  .updated {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    color: var(--text-faint);
-  }
+  select { cursor: pointer; min-width: 150px; }
+  .toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+  .toggle input { accent-color: var(--yellow); width: 15px; height: 15px; cursor: pointer; }
+  .result-count { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--text-faint); margin-left: auto; }
 
   /* ---- Summary strip ---- */
-  .summary {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background: var(--hairline);
-    border: 1px solid var(--hairline);
-    margin-bottom: 32px;
-  }
-
-  .stat {
-    background: var(--panel);
-    padding: 18px 20px;
-  }
-
-  .stat .n {
-    font-family: 'Archivo Black', sans-serif;
-    font-size: 32px;
-    color: var(--text);
-  }
-
-  .stat.go .n { color: var(--yellow); }
-
-  .stat .l {
-    font-size: 12px;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 4px;
-  }
+  .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); margin-bottom: 28px; }
+  .stat { background: var(--panel); padding: 16px 20px; }
+  .stat .n { font-family: 'Archivo Black', sans-serif; font-size: 28px; color: var(--text); }
+  .stat.flag .n { color: var(--yellow); }
+  .stat .l { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
 
   /* ---- Table ---- */
-  .table-head {
-    display: grid;
-    grid-template-columns: 2fr 1.3fr 1.5fr 1fr;
-    gap: 16px;
-    padding: 0 20px 12px;
-    font-size: 11px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text-faint);
-    border-bottom: 1px solid var(--hairline);
-  }
-
-  .row {
-    display: grid;
-    grid-template-columns: 2fr 1.3fr 1.5fr 1fr;
-    gap: 16px;
-    padding: 18px 20px;
-    border-bottom: 1px solid var(--hairline);
-    align-items: center;
-    transition: background 0.15s ease;
-  }
-
+  .table-head { display: grid; grid-template-columns: 2fr 1.3fr 1.5fr 0.8fr; gap: 16px; padding: 0 20px 12px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-faint); border-bottom: 1px solid var(--hairline); }
+  .row { display: grid; grid-template-columns: 2fr 1.3fr 1.5fr 0.8fr; gap: 16px; padding: 18px 20px; border-bottom: 1px solid var(--hairline); align-items: center; transition: background 0.15s ease; }
   .row:hover { background: var(--panel); }
-
-  .fair-name {
-    font-weight: 600;
-    font-size: 15px;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-
+  .fair-name { font-weight: 600; font-size: 15px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
   .fair-name:hover { color: var(--yellow); }
-
-  .fair-name .arrow {
-    font-size: 13px;
-    color: var(--text-faint);
-  }
-
-  .dates, .venue {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    color: var(--text-dim);
-  }
-
+  .fair-name .arrow { font-size: 13px; color: var(--text-faint); }
+  .dates, .venue { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--text-dim); }
   .venue { font-family: 'Inter', sans-serif; }
+  .flag-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; padding: 5px 10px; border-radius: 2px; white-space: nowrap; }
+  .flag-badge.on { background: var(--yellow); color: #14140E; }
+  .flag-badge.off { background: var(--panel-alt); color: var(--text-faint); border: 1px solid var(--hairline); }
+  .note { font-size: 12px; color: var(--text-faint); margin-top: 4px; }
+  .copy-btn { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--text-faint); background: none; border: 1px solid var(--hairline); border-radius: 2px; padding: 3px 6px; margin-top: 6px; cursor: pointer; display: block; }
+  .copy-btn:hover { color: var(--yellow); border-color: var(--yellow); }
 
-  .badge {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    padding: 5px 10px;
-    border-radius: 2px;
-    white-space: nowrap;
-  }
+  .empty, .loading { padding: 60px 20px; text-align: center; color: var(--text-faint); font-family: 'IBM Plex Mono', monospace; font-size: 13px; }
+  footer { margin-top: 40px; font-size: 12px; color: var(--text-faint); font-family: 'IBM Plex Mono', monospace; }
 
-  .badge.go { background: var(--yellow); color: #14140E; }
-  .badge.skip { background: transparent; border: 1px solid var(--maroon); color: #C77; }
-  .badge.maybe { background: transparent; border: 1px solid var(--hairline); color: var(--text-dim); }
-  .badge.pending { background: var(--panel-alt); color: var(--text-faint); }
-
-  .note {
-    font-size: 12px;
-    color: var(--text-faint);
-    margin-top: 4px;
-  }
-
-  .empty, .loading {
-    padding: 60px 20px;
-    text-align: center;
-    color: var(--text-faint);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-  }
-
-  footer {
-    margin-top: 40px;
-    font-size: 12px;
-    color: var(--text-faint);
-    font-family: 'IBM Plex Mono', monospace;
-  }
-
-  /* ---- Mobile ---- */
   @media (max-width: 720px) {
-    .month-tile .num { font-size: 60px; }
-    .summary { grid-template-columns: repeat(2, 1fr); }
+    .month-tile .num { font-size: 48px; }
+    .summary { grid-template-columns: repeat(3, 1fr); }
     .table-head { display: none; }
-    .row {
-      grid-template-columns: 1fr;
-      gap: 6px;
-      padding: 16px 4px;
-    }
+    .row { grid-template-columns: 1fr; gap: 6px; padding: 16px 4px; }
     .row .dates::before { content: "Dates: "; color: var(--text-faint); }
     .row .venue::before { content: "Venue: "; color: var(--text-faint); }
+    .filters { flex-direction: column; align-items: stretch; }
+    .result-count { margin-left: 0; }
   }
-
-  :focus-visible {
-    outline: 2px solid var(--yellow);
-    outline-offset: 2px;
-  }
+  :focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
 </style>
 </head>
 <body>
@@ -239,75 +92,188 @@
       </div>
       <div class="header-text">
         <p class="eyebrow">12P &middot; China Trade Fair Radar</p>
-        <h1 id="monthTitle">Loading month&hellip;</h1>
+        <h1 id="pageTitle">Loading&hellip;</h1>
         <p class="updated" id="updatedAt">Checking last update&hellip;</p>
       </div>
     </div>
 
+    <div class="filters">
+      <select id="monthFilter"><option value="all">All months</option></select>
+      <select id="cityFilter"><option value="all">All cities</option></select>
+      <label class="toggle"><input type="checkbox" id="flaggedOnly" /> Show only flagged</label>
+      <span class="result-count" id="resultCount"></span>
+    </div>
+
     <div class="summary" id="summary">
       <div class="stat"><div class="n">&mdash;</div><div class="l">Found</div></div>
-      <div class="stat go"><div class="n">&mdash;</div><div class="l">Go</div></div>
-      <div class="stat"><div class="n">&mdash;</div><div class="l">Skip</div></div>
-      <div class="stat"><div class="n">&mdash;</div><div class="l">Pending</div></div>
+      <div class="stat flag"><div class="n">&mdash;</div><div class="l">Flagged</div></div>
+      <div class="stat"><div class="n">&mdash;</div><div class="l">Not reviewed</div></div>
     </div>
 
     <div class="table-head">
       <div>Fair</div>
       <div>Dates</div>
       <div>Venue</div>
-      <div>Status</div>
+      <div>Interest</div>
     </div>
 
-    <div id="rows">
-      <div class="loading">Fetching data/fairs.json&hellip;</div>
-    </div>
+    <div id="rows"><div class="loading">Fetching data/fairs.json&hellip;</div></div>
 
     <footer>
-      Data refreshed daily from Expolume. Decisions are reviewed and set manually in <code>data/decisions.json</code>.
+      Data refreshed periodically from Expolume. Mark interest by editing <code>data/decisions.json</code> &mdash; use the "copy entry" button on a fair to get a ready-to-paste snippet.
     </footer>
   </div>
 
 <script>
 const MONTH_NAMES = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+let ALL_FAIRS = [];
+let DECISIONS = {};
 
 async function loadJSON(path) {
   try {
     const res = await fetch(path, { cache: "no-store" });
     if (!res.ok) return null;
     return await res.json();
-  } catch (e) {
-    return null;
-  }
+  } catch (e) { return null; }
 }
 
 function fmtUpdated(iso) {
   if (!iso) return "Not yet run";
   const d = new Date(iso);
-  return "Last updated " + d.toLocaleString(undefined, {
-    day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit"
-  });
-}
-
-function decisionFor(decisions, fair) {
-  if (!decisions) return null;
-  return decisions[fair.url] || decisions[fair.name] || null;
-}
-
-function badgeHTML(decision) {
-  if (!decision || !decision.decision) {
-    return '<span class="badge pending">Pending review</span>';
-  }
-  const val = decision.decision.toLowerCase();
-  const cls = val === "go" ? "go" : val === "skip" ? "skip" : "maybe";
-  const label = val === "go" ? "Go" : val === "skip" ? "Skip" : "Maybe";
-  return '<span class="badge ' + cls + '">' + label + '</span>' +
-         (decision.note ? '<div class="note">' + escapeHTML(decision.note) + '</div>' : '');
+  return "Last updated " + d.toLocaleString(undefined, { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
 }
 
 function escapeHTML(str) {
   const div = document.createElement('div');
-  div.textContent = str;
+  div.textContent = str == null ? '' : str;
   return div.innerHTML;
+}
+
+// Parses "Aug 13, 2026 To Aug 15, 2026" -> {year, month(1-12), monthKey: "2026-08"}
+function parseStart(datesStr) {
+  if (!datesStr) return null;
+  const first = datesStr.split(" To ")[0].trim();
+  const d = new Date(first);
+  if (isNaN(d)) return null;
+  return { year: d.getFullYear(), month: d.getMonth() + 1 };
+}
+
+// Heuristic: the city is usually the first word of the venue string
+// (e.g. "Xian International Convention..." -> "Xian"). Good enough for
+// a filter dropdown; not claiming perfect accuracy on every venue name.
+function guessCity(venue) {
+  if (!venue) return null;
+  const firstWord = venue.trim().split(/\s+/)[0];
+  return firstWord || null;
+}
+
+function decisionFor(fair) {
+  return DECISIONS[fair.url] || DECISIONS[fair.name] || null;
+}
+
+function isFlagged(fair) {
+  const d = decisionFor(fair);
+  return !!(d && d.flagged);
+}
+
+function populateFilterOptions() {
+  const months = new Map(); // key "2026-08" -> label "August 2026"
+  const cities = new Set();
+
+  ALL_FAIRS.forEach(f => {
+    const s = parseStart(f.dates);
+    if (s) {
+      const key = `${s.year}-${String(s.month).padStart(2,'0')}`;
+      months.set(key, `${MONTH_NAMES[s.month-1]} ${s.year}`);
+    }
+    const city = guessCity(f.venue);
+    if (city) cities.add(city);
+  });
+
+  const monthSel = document.getElementById('monthFilter');
+  Array.from(months.entries()).sort().forEach(([key, label]) => {
+    const opt = document.createElement('option');
+    opt.value = key; opt.textContent = label;
+    monthSel.appendChild(opt);
+  });
+
+  const citySel = document.getElementById('cityFilter');
+  Array.from(cities).sort().forEach(city => {
+    const opt = document.createElement('option');
+    opt.value = city; opt.textContent = city;
+    citySel.appendChild(opt);
+  });
+}
+
+function currentFilters() {
+  return {
+    month: document.getElementById('monthFilter').value,
+    city: document.getElementById('cityFilter').value,
+    flaggedOnly: document.getElementById('flaggedOnly').checked,
+  };
+}
+
+function applyFilters() {
+  const { month, city, flaggedOnly } = currentFilters();
+
+  const filtered = ALL_FAIRS.filter(f => {
+    if (month !== 'all') {
+      const s = parseStart(f.dates);
+      const key = s ? `${s.year}-${String(s.month).padStart(2,'0')}` : null;
+      if (key !== month) return false;
+    }
+    if (city !== 'all' && guessCity(f.venue) !== city) return false;
+    if (flaggedOnly && !isFlagged(f)) return false;
+    return true;
+  });
+
+  renderRows(filtered);
+  renderSummary(filtered);
+  document.getElementById('resultCount').textContent = `${filtered.length} shown`;
+}
+
+function renderSummary(fairs) {
+  let flagged = 0;
+  fairs.forEach(f => { if (isFlagged(f)) flagged++; });
+  document.getElementById('summary').innerHTML = `
+    <div class="stat"><div class="n">${fairs.length}</div><div class="l">Found</div></div>
+    <div class="stat flag"><div class="n">${flagged}</div><div class="l">Flagged</div></div>
+    <div class="stat"><div class="n">${fairs.length - flagged}</div><div class="l">Not reviewed</div></div>
+  `;
+}
+
+function flagBadgeHTML(fair) {
+  const d = decisionFor(fair);
+  const flagged = isFlagged(fair);
+  return `<span class="flag-badge ${flagged ? 'on' : 'off'}">${flagged ? '★ Flagged' : 'Not reviewed'}</span>` +
+         (d && d.note ? `<div class="note">${escapeHTML(d.note)}</div>` : '');
+}
+
+function copySnippet(url) {
+  const snippet = `"${url}": {\n  "flagged": true,\n  "note": ""\n},`;
+  navigator.clipboard.writeText(snippet).catch(() => {});
+}
+window.copySnippet = copySnippet;
+
+function renderRows(fairs) {
+  const rowsEl = document.getElementById('rows');
+  if (fairs.length === 0) {
+    rowsEl.innerHTML = '<div class="empty">No fairs match the current filters.</div>';
+    return;
+  }
+  rowsEl.innerHTML = fairs.map(f => `
+    <div class="row">
+      <a class="fair-name" href="${f.url || '#'}" target="_blank" rel="noopener">
+        ${escapeHTML(f.name || 'Untitled fair')} <span class="arrow">&#8599;</span>
+      </a>
+      <div class="dates">${escapeHTML(f.dates || '&mdash;')}</div>
+      <div class="venue">${escapeHTML(f.venue || '&mdash;')}</div>
+      <div>
+        ${flagBadgeHTML(f)}
+        <button class="copy-btn" onclick="copySnippet('${(f.url||'').replace(/'/g,"\\'")}')">copy entry</button>
+      </div>
+    </div>
+  `).join('');
 }
 
 async function init() {
@@ -316,61 +282,29 @@ async function init() {
     loadJSON('data/decisions.json')
   ]);
 
-  const rowsEl = document.getElementById('rows');
-  const summaryEl = document.getElementById('summary');
-
   if (!fairsData) {
-    rowsEl.innerHTML = '<div class="empty">Could not load data/fairs.json. Has the daily workflow run yet?</div>';
+    document.getElementById('rows').innerHTML = '<div class="empty">Could not load data/fairs.json. Has the scraper been run yet?</div>';
     return;
   }
 
-  // Month header
-  if (fairsData.target_month) {
-    const [y, m] = fairsData.target_month.split('-');
-    document.getElementById('monthNum').textContent = m;
-    document.getElementById('monthTitle').textContent = MONTH_NAMES[parseInt(m, 10) - 1] + ' ' + y;
-  } else {
-    document.getElementById('monthTitle').textContent = 'China Trade Fair Radar';
-  }
+  DECISIONS = decisions || {};
+  ALL_FAIRS = fairsData.fairs || [];
+
+  document.getElementById('pageTitle').textContent = 'China Trade Fair Radar';
   document.getElementById('updatedAt').textContent = fmtUpdated(fairsData.last_updated);
 
-  const fairs = fairsData.fairs || [];
+  // Month tile shows the current month at page-load time (just a visual anchor,
+  // actual filtering is controlled by the dropdown below)
+  const now = new Date();
+  document.getElementById('monthNum').textContent = String(now.getMonth() + 1).padStart(2, '0');
 
-  // Summary counts
-  let go = 0, skip = 0, pending = 0;
-  fairs.forEach(f => {
-    const d = decisionFor(decisions, f);
-    const val = d && d.decision ? d.decision.toLowerCase() : null;
-    if (val === 'go') go++;
-    else if (val === 'skip') skip++;
-    else pending++;
-  });
+  populateFilterOptions();
 
-  summaryEl.innerHTML = `
-    <div class="stat"><div class="n">${fairs.length}</div><div class="l">Found</div></div>
-    <div class="stat go"><div class="n">${go}</div><div class="l">Go</div></div>
-    <div class="stat"><div class="n">${skip}</div><div class="l">Skip</div></div>
-    <div class="stat"><div class="n">${pending}</div><div class="l">Pending</div></div>
-  `;
+  document.getElementById('monthFilter').addEventListener('change', applyFilters);
+  document.getElementById('cityFilter').addEventListener('change', applyFilters);
+  document.getElementById('flaggedOnly').addEventListener('change', applyFilters);
 
-  if (fairs.length === 0) {
-    rowsEl.innerHTML = '<div class="empty">No China fairs found for this month yet.</div>';
-    return;
-  }
-
-  rowsEl.innerHTML = fairs.map(f => {
-    const d = decisionFor(decisions, f);
-    return `
-      <div class="row">
-        <a class="fair-name" href="${f.url || '#'}" target="_blank" rel="noopener">
-          ${escapeHTML(f.name || 'Untitled fair')} <span class="arrow">&#8599;</span>
-        </a>
-        <div class="dates">${escapeHTML(f.dates || '&mdash;')}</div>
-        <div class="venue">${escapeHTML(f.venue || '&mdash;')}</div>
-        <div>${badgeHTML(d)}</div>
-      </div>
-    `;
-  }).join('');
+  applyFilters();
 }
 
 init();

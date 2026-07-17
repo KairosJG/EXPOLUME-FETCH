@@ -53,7 +53,7 @@ def get_date_range(months_ahead=6):
     return start.strftime("%Y-%m-%d"), end.strftime("%Y-%m-%d")
 
 
-def build_search_url(start_str, end_str, limit=500):
+def build_search_url(start_str, end_str, limit=1500):
     params = {
         "vx": "1",
         "action": "search_posts",
