@@ -65,8 +65,35 @@
   .stat.flag .n { color: var(--yellow); }
   .stat .l { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-top: 6px; }
 
-  .table-head { display: grid; grid-template-columns: 2.1fr 1.2fr 1.4fr 0.9fr; gap: 16px; padding: 0 20px 12px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-faint); border-bottom: 1px solid var(--hairline); }
-  .row { display: grid; grid-template-columns: 2.1fr 1.2fr 1.4fr 0.9fr; gap: 16px; padding: 18px 20px; border-bottom: 1px solid var(--hairline); align-items: center; transition: background 0.15s ease; }
+  .table-head { display: grid; grid-template-columns: 56px 2.1fr 1.2fr 1.4fr 0.9fr; gap: 16px; padding: 0 20px 12px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-faint); border-bottom: 1px solid var(--hairline); }
+  .row { display: grid; grid-template-columns: 56px 2.1fr 1.2fr 1.4fr 0.9fr; gap: 16px; padding: 18px 20px; border-bottom: 1px solid var(--hairline); align-items: center; transition: background 0.15s ease; }
+  .thumb {
+    width: 44px; height: 44px; border-radius: 6px; object-fit: contain; background: var(--panel-alt);
+    border: 1px solid var(--hairline); padding: 4px;
+  }
+  .thumb-placeholder {
+    width: 44px; height: 44px; border-radius: 6px; background: var(--panel-alt); border: 1px solid var(--hairline);
+  }
+  .thumb-btn { border: none; background: none; padding: 0; cursor: pointer; display: block; }
+  .thumb-btn:hover .thumb { border-color: var(--yellow); }
+
+  .lightbox {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 50;
+    align-items: center; justify-content: center; padding: 24px;
+  }
+  .lightbox.show { display: flex; }
+  .lightbox-inner { max-width: 900px; width: 100%; position: relative; }
+  .lightbox-close {
+    position: absolute; top: -48px; right: 0; background: var(--panel); border: 1px solid var(--hairline);
+    color: var(--text); width: 36px; height: 36px; border-radius: 6px; cursor: pointer; font-size: 18px;
+  }
+  .lightbox-close:hover { border-color: var(--yellow); color: var(--yellow); }
+  .lightbox-main { width: 100%; max-height: 70vh; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+  .lightbox-main img { max-width: 100%; max-height: 70vh; border-radius: 6px; background: var(--panel); }
+  .lightbox-thumbs { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .lightbox-thumb { width: 64px; height: 64px; object-fit: cover; border-radius: 5px; cursor: pointer; opacity: 0.55; border: 2px solid transparent; }
+  .lightbox-thumb.active { opacity: 1; border-color: var(--yellow); }
+  .lightbox-thumb:hover { opacity: 0.9; }
   .row:hover { background: var(--panel); }
   .fair-name { font-weight: 600; font-size: 15px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
   .fair-name:hover { color: var(--yellow); }
@@ -155,7 +182,7 @@
       <div class="stat"><div class="n">&mdash;</div><div class="l">Cidades</div></div>
     </div>
 
-    <div class="table-head"><div>Feira</div><div>Datas</div><div>Local</div><div>Interesse</div></div>
+    <div class="table-head"><div></div><div>Feira</div><div>Datas</div><div>Local</div><div>Interesse</div></div>
     <div id="rows"><div class="loading">Buscando data/fairs.json&hellip;</div></div>
 
     <footer>
@@ -166,6 +193,14 @@
   </div>
 
   <div class="toast" id="toast"></div>
+
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lightboxClose" title="Fechar">&times;</button>
+      <div class="lightbox-main"><img id="lightboxMain" src="" alt="" /></div>
+      <div class="lightbox-thumbs" id="lightboxThumbs"></div>
+    </div>
+  </div>
 
 <script>
 const MONTH_NAMES = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
@@ -403,8 +438,17 @@ function renderRows(fairs) {
   rowsEl.innerHTML = fairs.map(f => {
     const niche = classifyNiche(f.name);
     const primaryLink = f.official_url || f.url;
+    const gallery = (f.gallery && f.gallery.length) ? f.gallery : (f.image_url ? [f.image_url] : []);
+    const thumbImg = gallery[0];
+    const safeUrl = (f.url || '').replace(/'/g, "\\'");
+    const thumb = thumbImg
+      ? `<button class="thumb-btn" onclick="openGalleryFor('${safeUrl}')" title="Ver fotos">
+           <img class="thumb" src="${thumbImg}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'thumb-placeholder'}))" />
+         </button>`
+      : `<div class="thumb-placeholder"></div>`;
     return `
     <div class="row">
+      <div>${thumb}</div>
       <div>
         <a class="fair-name" href="${primaryLink || '#'}" target="_blank" rel="noopener">
           ${escapeHTML(f.name || 'Untitled fair')} <span class="arrow">&#8599;</span>
@@ -419,6 +463,36 @@ function renderRows(fairs) {
     </div>
   `;
   }).join('');
+}
+
+let CURRENT_GALLERY = [];
+
+function openGalleryFor(url) {
+  const fair = ALL_FAIRS.find(f => f.url === url);
+  if (!fair) return;
+  const gallery = (fair.gallery && fair.gallery.length) ? fair.gallery : (fair.image_url ? [fair.image_url] : []);
+  if (!gallery.length) return;
+  CURRENT_GALLERY = gallery;
+  showLightboxImage(0);
+  document.getElementById('lightbox').classList.add('show');
+}
+window.openGalleryFor = openGalleryFor;
+
+function showLightboxImage(idx) {
+  document.getElementById('lightboxMain').src = CURRENT_GALLERY[idx];
+  const thumbsEl = document.getElementById('lightboxThumbs');
+  if (CURRENT_GALLERY.length > 1) {
+    thumbsEl.innerHTML = CURRENT_GALLERY.map((src, i) =>
+      `<img class="lightbox-thumb ${i === idx ? 'active' : ''}" src="${src}" alt="" onclick="showLightboxImage(${i})" />`
+    ).join('');
+  } else {
+    thumbsEl.innerHTML = '';
+  }
+}
+window.showLightboxImage = showLightboxImage;
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('show');
 }
 
 async function init() {
@@ -469,6 +543,14 @@ async function init() {
     updateCityWrapState();
     applyFilters();
     showToast('Filtros limpos.');
+  });
+
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  document.getElementById('lightbox').addEventListener('click', (e) => {
+    if (e.target.id === 'lightbox') closeLightbox();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
   });
 
   applyFilters();

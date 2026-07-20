@@ -100,6 +100,7 @@ def extract_fairs_from_html(html):
 
         context = ""
         last_safe_text = ""
+        last_safe_node = link.parent
         node = link.parent
         for _ in range(8):
             if node is None:
@@ -112,6 +113,7 @@ def extract_fairs_from_html(html):
                 break
             text = node.get_text("\n", strip=True)
             last_safe_text = text
+            last_safe_node = node
             if DATE_PATTERN.search(text):
                 context = text
                 break
@@ -131,20 +133,44 @@ def extract_fairs_from_html(html):
                         venue = lines[i + 1]
                     break
 
-        fairs.append({"name": title, "url": href, "dates": dates, "venue": venue})
+        # Grab the fair's thumbnail/logo image, if present, from within
+        # this same card-scoped container. Some sites lazy-load images
+        # (real image in data-src, a placeholder in src), so check both.
+        image_url = None
+        img_tag = last_safe_node.find("img") if last_safe_node else None
+        if img_tag:
+            image_url = (
+                img_tag.get("data-src")
+                or img_tag.get("data-lazy-src")
+                or img_tag.get("src")
+            )
+            if image_url and image_url.startswith("data:"):
+                # A base64 placeholder, not a real lazy-loaded image — skip it.
+                image_url = None
+
+        fairs.append({
+            "name": title,
+            "url": href,
+            "dates": dates,
+            "venue": venue,
+            "image_url": image_url,
+        })
 
     return fairs
 
 
-def fetch_all_fairs(start_str, end_str, page_size=500, max_pages=10, official_url_cache=None):
+def fetch_all_fairs(start_str, end_str, page_size=500, max_pages=10,
+                     official_url_cache=None, gallery_cache=None):
     """
     Fetches every page of results for the given date range, merging by
     URL to avoid duplicates. Then, still using the same authenticated
     browser session, visits each fair's own page to grab its official
-    website link — skipping any fair already resolved in a previous run
-    (official_url_cache) to keep repeat runs faster.
+    website link and a small photo gallery from that official site —
+    skipping anything already resolved in a previous run to keep repeat
+    runs faster.
     """
     official_url_cache = official_url_cache or {}
+    gallery_cache = gallery_cache or {}
     all_fairs = []
     seen_urls = set()
     last_url_used = None
@@ -154,7 +180,6 @@ def fetch_all_fairs(start_str, end_str, page_size=500, max_pages=10, official_ur
         context = browser.new_context()
         page = context.new_page()
 
-        # One-time Cloudflare warm-up.
         page.goto(WARMUP_URL, wait_until="domcontentloaded", timeout=60000)
         for _ in range(10):
             if "Just a moment" not in page.title():
@@ -189,15 +214,28 @@ def fetch_all_fairs(start_str, end_str, page_size=500, max_pages=10, official_ur
             if len(page_fairs) < page_size:
                 break
 
-        # Enrich each fair with its official website link.
         to_fetch = [f for f in all_fairs if f["url"] not in official_url_cache]
-        print(f"Fetching official website links for {len(to_fetch)} fair(s) "
+        print(f"Fetching official website + gallery for {len(to_fetch)} fair(s) "
               f"({len(all_fairs) - len(to_fetch)} reused from last run)...")
+
         for i, fair in enumerate(all_fairs, start=1):
-            if fair["url"] in official_url_cache:
-                fair["official_url"] = official_url_cache[fair["url"]]
-            else:
-                fair["official_url"] = fetch_official_website(context, fair["url"])
+            try:
+                if fair["url"] in official_url_cache:
+                    fair["official_url"] = official_url_cache[fair["url"]]
+                else:
+                    fair["official_url"] = fetch_official_website(context, fair["url"])
+
+                if fair["url"] in gallery_cache:
+                    fair["gallery"] = gallery_cache[fair["url"]]
+                else:
+                    gallery = fetch_gallery(context, fair.get("official_url"))
+                    if not gallery and fair.get("image_url"):
+                        gallery = [fair["image_url"]]
+                    fair["gallery"] = gallery
+            except Exception:
+                fair.setdefault("official_url", None)
+                fair.setdefault("gallery", [fair["image_url"]] if fair.get("image_url") else [])
+
             if i % 50 == 0:
                 print(f"  ...{i}/{len(all_fairs)} fair pages checked")
 
@@ -246,31 +284,96 @@ def fetch_official_website(context, fair_url):
         return None
 
 
+def extract_gallery_images(html, base_url, max_images=4):
+    """
+    Tries to find up to `max_images` real event photos on an official
+    fair website. Strategy:
+    1. og:image meta tags (some sites list more than one).
+    2. Fallback: scan <img> tags on the page, skipping obvious non-content
+       images (logos, icons, tiny images) based on filename hints and
+       width/height attributes when available.
+    """
+    soup = BeautifulSoup(html, "html.parser")
+    images = []
+    seen = set()
+
+    for meta in soup.find_all("meta", property="og:image"):
+        src = meta.get("content")
+        if src and src not in seen:
+            images.append(src)
+            seen.add(src)
+        if len(images) >= max_images:
+            return images
+
+    skip_keywords = ["logo", "icon", "sprite", "avatar", "flag", "badge", "placeholder", "spinner", "loading"]
+    for img in soup.find_all("img"):
+        if len(images) >= max_images:
+            break
+        src = img.get("data-src") or img.get("data-lazy-src") or img.get("src")
+        if not src or src.startswith("data:"):
+            continue
+        low = src.lower()
+        if any(k in low for k in skip_keywords):
+            continue
+        try:
+            w = int(img.get("width", 0) or 0)
+            h = int(img.get("height", 0) or 0)
+            if (0 < w < 100) or (0 < h < 100):
+                continue
+        except ValueError:
+            pass
+        full_src = urllib.parse.urljoin(base_url, src)
+        if full_src not in seen:
+            images.append(full_src)
+            seen.add(full_src)
+
+    return images
+
+
+def fetch_gallery(context, official_url, max_images=4):
+    if not official_url:
+        return []
+    try:
+        response = context.request.get(official_url, timeout=10000)
+        html = response.text()
+        return extract_gallery_images(html, official_url, max_images=max_images)
+    except Exception:
+        return []
+
+
 def load_previous_official_urls(path="data/fairs.json"):
     """
-    Reuses official_url values already fetched in a previous run, keyed by
-    fair url, so we don't re-visit every single fair's page every time —
-    only ones we haven't resolved yet.
+    Reuses official_url and gallery values already fetched in a previous
+    run, keyed by fair url, so we don't re-visit every fair's page (and
+    every fair's separate official website) on every single run — only
+    ones we haven't resolved yet.
     """
-    cache = {}
+    official_cache = {}
+    gallery_cache = {}
     try:
         with open(path, "r", encoding="utf-8") as f:
             old_data = json.load(f)
         for fair in old_data.get("fairs", []):
             if fair.get("official_url"):
-                cache[fair["url"]] = fair["official_url"]
+                official_cache[fair["url"]] = fair["official_url"]
+            if fair.get("gallery"):
+                gallery_cache[fair["url"]] = fair["gallery"]
     except (FileNotFoundError, json.JSONDecodeError):
         pass
-    return cache
+    return official_cache, gallery_cache
 
 
 def main():
     start_str, end_str = get_date_range(months_ahead=6)
     print(f"Requesting China fairs from {start_str} to {end_str}")
 
-    official_url_cache = load_previous_official_urls()
+    official_url_cache, gallery_cache = load_previous_official_urls()
 
-    fairs, search_url = fetch_all_fairs(start_str, end_str, official_url_cache=official_url_cache)
+    fairs, search_url = fetch_all_fairs(
+        start_str, end_str,
+        official_url_cache=official_url_cache,
+        gallery_cache=gallery_cache,
+    )
     print(f"Found {len(fairs)} fairs total (all pages combined)")
 
     today = datetime.now(timezone.utc).date()
