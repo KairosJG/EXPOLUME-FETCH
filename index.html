@@ -78,6 +78,9 @@
   }
   .dates, .venue { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--text-dim); }
   .venue { font-family: 'Inter', sans-serif; }
+  .venue-link { color: var(--text-dim); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
+  .venue-link:hover { color: var(--yellow); }
+  .venue-link .arrow { font-size: 12px; color: var(--text-faint); }
 
   .interest-cell { display: flex; align-items: center; gap: 12px; }
   .flag-btn {
@@ -399,16 +402,19 @@ function renderRows(fairs) {
   }
   rowsEl.innerHTML = fairs.map(f => {
     const niche = classifyNiche(f.name);
+    const primaryLink = f.official_url || f.url;
     return `
     <div class="row">
       <div>
-        <a class="fair-name" href="${f.url || '#'}" target="_blank" rel="noopener">
+        <a class="fair-name" href="${primaryLink || '#'}" target="_blank" rel="noopener">
           ${escapeHTML(f.name || 'Untitled fair')} <span class="arrow">&#8599;</span>
         </a>
         <div><span class="niche-tag">${escapeHTML(niche.label)}</span></div>
       </div>
       <div class="dates">${escapeHTML(f.dates || '&mdash;')}</div>
-      <div class="venue">${escapeHTML(f.venue || '&mdash;')}</div>
+      <div class="venue">
+        ${f.venue ? `<a class="venue-link" href="${f.url || '#'}" target="_blank" rel="noopener" title="Ver no Expolume">${escapeHTML(f.venue)} <span class="arrow">&#8599;</span></a>` : '&mdash;'}
+      </div>
       <div>${interestCellHTML(f)}</div>
     </div>
   `;

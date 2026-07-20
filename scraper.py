@@ -136,12 +136,15 @@ def extract_fairs_from_html(html):
     return fairs
 
 
-def fetch_all_fairs(start_str, end_str, page_size=500, max_pages=10):
+def fetch_all_fairs(start_str, end_str, page_size=500, max_pages=10, official_url_cache=None):
     """
     Fetches every page of results for the given date range, merging by
-    URL to avoid duplicates. Stops when a page returns nothing new or
-    fewer than a full page (signaling we've reached the end).
+    URL to avoid duplicates. Then, still using the same authenticated
+    browser session, visits each fair's own page to grab its official
+    website link — skipping any fair already resolved in a previous run
+    (official_url_cache) to keep repeat runs faster.
     """
+    official_url_cache = official_url_cache or {}
     all_fairs = []
     seen_urls = set()
     last_url_used = None
@@ -184,8 +187,19 @@ def fetch_all_fairs(start_str, end_str, page_size=500, max_pages=10):
                 all_fairs.append(f)
 
             if len(page_fairs) < page_size:
-                # Fewer than a full page means this was the last one.
                 break
+
+        # Enrich each fair with its official website link.
+        to_fetch = [f for f in all_fairs if f["url"] not in official_url_cache]
+        print(f"Fetching official website links for {len(to_fetch)} fair(s) "
+              f"({len(all_fairs) - len(to_fetch)} reused from last run)...")
+        for i, fair in enumerate(all_fairs, start=1):
+            if fair["url"] in official_url_cache:
+                fair["official_url"] = official_url_cache[fair["url"]]
+            else:
+                fair["official_url"] = fetch_official_website(context, fair["url"])
+            if i % 50 == 0:
+                print(f"  ...{i}/{len(all_fairs)} fair pages checked")
 
         browser.close()
 
@@ -215,11 +229,48 @@ def is_already_past(fair, today):
     return end_date.date() < today
 
 
+def fetch_official_website(context, fair_url):
+    """
+    Visits a single fair's own Expolume page and looks for its
+    "Official Website" button/link, returning that URL if found.
+    """
+    try:
+        response = context.request.get(fair_url, headers={"Referer": WARMUP_URL})
+        html = response.text()
+        soup = BeautifulSoup(html, "html.parser")
+        for a in soup.find_all("a", href=True):
+            if a.get_text(strip=True).lower() == "official website":
+                return a["href"]
+        return None
+    except Exception:
+        return None
+
+
+def load_previous_official_urls(path="data/fairs.json"):
+    """
+    Reuses official_url values already fetched in a previous run, keyed by
+    fair url, so we don't re-visit every single fair's page every time —
+    only ones we haven't resolved yet.
+    """
+    cache = {}
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            old_data = json.load(f)
+        for fair in old_data.get("fairs", []):
+            if fair.get("official_url"):
+                cache[fair["url"]] = fair["official_url"]
+    except (FileNotFoundError, json.JSONDecodeError):
+        pass
+    return cache
+
+
 def main():
     start_str, end_str = get_date_range(months_ahead=6)
     print(f"Requesting China fairs from {start_str} to {end_str}")
 
-    fairs, search_url = fetch_all_fairs(start_str, end_str)
+    official_url_cache = load_previous_official_urls()
+
+    fairs, search_url = fetch_all_fairs(start_str, end_str, official_url_cache=official_url_cache)
     print(f"Found {len(fairs)} fairs total (all pages combined)")
 
     today = datetime.now(timezone.utc).date()
