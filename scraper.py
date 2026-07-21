@@ -19,6 +19,7 @@ import json
 import re
 import urllib.parse
 from datetime import datetime, timezone
+from io import BytesIO
 
 from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
@@ -284,6 +285,42 @@ def fetch_official_website(context, fair_url):
         return None
 
 
+try:
+    from PIL import Image
+except ImportError:
+    Image = None
+
+
+def looks_like_a_photo(image_bytes, min_dim=250):
+    """
+    Heuristic check for "is this a real photo, not a logo/icon/QR code/banner".
+    Not perfect (no actual image understanding), but filters out most
+    obvious junk:
+    - Too small -> likely an icon, not an event photo.
+    - Extreme aspect ratio -> likely a banner/strip, not a photo.
+    - Very few distinct colors -> likely a flat graphic, logo, or QR code
+      (real photos almost always have hundreds+ of distinct colors).
+    """
+    if Image is None:
+        return True  # Pillow not installed -> don't filter, fail open
+    try:
+        im = Image.open(BytesIO(image_bytes))
+        w, h = im.size
+        if w < min_dim or h < min_dim:
+            return False
+        ratio = w / h if h else 0
+        if ratio > 4 or ratio < 0.25:
+            return False
+        small = im.convert("RGB").resize((80, 80))
+        colors = small.getcolors(maxcolors=100000)
+        unique_count = len(colors) if colors else 100000
+        if unique_count < 200:
+            return False
+        return True
+    except Exception:
+        return True  # couldn't decode -> don't over-filter, let it through
+
+
 def extract_gallery_images(html, base_url, max_images=4):
     """
     Tries to find up to `max_images` real event photos on an official
@@ -330,15 +367,29 @@ def extract_gallery_images(html, base_url, max_images=4):
     return images
 
 
-def fetch_gallery(context, official_url, max_images=4):
+def fetch_gallery(context, official_url, max_images=4, max_candidates=10):
     if not official_url:
         return []
     try:
         response = context.request.get(official_url, timeout=10000)
         html = response.text()
-        return extract_gallery_images(html, official_url, max_images=max_images)
+        candidates = extract_gallery_images(html, official_url, max_images=max_candidates)
     except Exception:
         return []
+
+    good = []
+    for src in candidates:
+        if len(good) >= max_images:
+            break
+        try:
+            img_response = context.request.get(src, timeout=6000)
+            img_bytes = img_response.body()
+            if looks_like_a_photo(img_bytes):
+                good.append(src)
+        except Exception:
+            continue
+
+    return good
 
 
 def load_previous_official_urls(path="data/fairs.json"):

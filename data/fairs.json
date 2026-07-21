@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-20T21:30:39.686176+00:00",
+  "last_updated": "2026-07-20T22:22:13.140143+00:00",
   "range": "2026-07-01..2027-01-31",
   "source_url": "https://expolume.com/?vx=1&action=search_posts&type=expo&keywords=&industries=&regions=china&relations=&recurring-date=2026-07-01..2027-01-31&sort=latest&pg=2&limit=500&__template_id=65809&__get_total_count=1",
   "fairs": [
@@ -834,7 +834,12 @@
       "venue": "Guangzhou Poly World Trade Center",
       "image_url": null,
       "official_url": "https://www.feidianhui.com/",
-      "gallery": []
+      "gallery": [
+        "https://www.feidianhui.com/images1/banner02.jpg?ver=2",
+        "https://www.feidianhui.com/images1/banner02.jpg?ver=3",
+        "https://www.feidianhui.com/images1/sz_03.jpg?ver=06",
+        "https://www.feidianhui.com/images1/sz_04.jpg?ver=06"
+      ]
     },
     {
       "name": "Shenyang Livestock Expo 2026",
@@ -1011,7 +1016,12 @@
       "venue": "Hangzhou Grand Convention and Exhibition Center",
       "image_url": null,
       "official_url": "http://www.rechinaexpo.com.cn/",
-      "gallery": []
+      "gallery": [
+        "http://www.rechinaexpo.com.cn/data/upload/image/202504/83c02d196a864e9064bf2da9966be045.jpg",
+        "http://www.rechinaexpo.com.cn/data/upload/image/202410/23/20241023123842_45568.jpg",
+        "http://www.rechinaexpo.com.cn/data/upload/image/202205/6d417028f682160a73952642244c27e9.jpg",
+        "http://www.rechinaexpo.com.cn/data/upload/image/202205/54e51b5309a7425671d72810e205c9f3.jpg"
+      ]
     },
     {
       "name": "Beijing International Gifts and Home Expo 2026",
@@ -2341,7 +2351,12 @@
       "venue": "Shanghai New International Expo Center",
       "image_url": null,
       "official_url": "https://www.cinte.com.cn/",
-      "gallery": []
+      "gallery": [
+        "https://www.cinte.com.cn/image/pic2017/pic001.jpg",
+        "https://www.cinte.com.cn/image/pic2017/pic002.jpg",
+        "https://www.cinte.com.cn/image/pic2017/pic003.jpg",
+        "https://www.cinte.com.cn/image/pic2017/pic004.jpg"
+      ]
     },
     {
       "name": "Shanghai International Leather Expo 2026",
@@ -2402,7 +2417,12 @@
       "venue": "Canton Fair Complex",
       "image_url": null,
       "official_url": "https://www.cismef.com.cn/",
-      "gallery": []
+      "gallery": [
+        "https://www.cismef.com.cn/zbh-cms/template/1/template-pc/images/lang.svg",
+        "https://www.cismef.com.cn/zbh-cms/template/1/template-pc/images/user.svg",
+        "https://www.cismef.com.cn/zbh-cms/template/1/template-pc/images/shouye.svg",
+        "https://www.cismef.com.cn/zbh-cms/template/1/template-pc/images/xinwendongtai-h.svg"
+      ]
     },
     {
       "name": "Beijing International Medical Device Expo and In Vitro Diagnostics Expo 2026",
@@ -2481,7 +2501,12 @@
       "venue": "Ningbo International Conference and Exhibition Center",
       "image_url": null,
       "official_url": "https://www.expocme.cn/nb",
-      "gallery": []
+      "gallery": [
+        "https://imgs.expocme.cn/2025-04-07/f4eabfd6-9b57-4162-99b5-933777ad97e0.png",
+        "https://imgs.expocme.cn/2024-07-10/41141853-3e3e-4f11-8b03-e8e91c0255e2.png",
+        "https://imgs.expocme.cn/2024-07-10/133dc775-4d64-4ee6-91a9-a4db0313ff23.png",
+        "https://imgs.expocme.cn/2024-07-10/51c35235-7573-488e-85b1-276b25f3ee7a.png"
+      ]
     },
     {
       "name": "IEAE Shenzhen International Consumer Electronics and Home Appliances Expo 2026",
@@ -3050,7 +3075,11 @@
       "venue": "Canton Fair Complex",
       "image_url": null,
       "official_url": "http://www.food2chinaexpo.com/",
-      "gallery": []
+      "gallery": [
+        "http://www.food2chinaexpo.com/uploadfiles/2024/12/20241205141626714.jpg",
+        "http://www.food2chinaexpo.com/uploadfiles/2025/07/20250721120346365.jpg",
+        "http://www.food2chinaexpo.com/cn/images/Floor003127-1.svg"
+      ]
     },
     {
       "name": "Guangzhou International Fisheries and Seafood Expo 2026",
@@ -6092,7 +6121,10 @@
       "venue": "Beijing International Exhibition Center (New Hall)",
       "image_url": null,
       "official_url": "https://www.nhnexpo.com/En",
-      "gallery": []
+      "gallery": [
+        "https://oss.nhnexpo.com/cloudExhibition/imgs/202511/fd7a8afd-71d4-4a1d-b24b-d296bc1adddc.png",
+        "https://oss.nhnexpo.com/cloudExhibition/imgs/202410/4b1bd7a5-ec07-4b21-8cdd-21166302e1df.jpg"
+      ]
     },
     {
       "name": "Guangzhou Jinhan Home and Gift Fair 2026",
@@ -6115,7 +6147,9 @@
       "venue": "Capital International Exhibition and Convention Center",
       "image_url": null,
       "official_url": "https://www.rehabshow.com.cn/firstpageEn",
-      "gallery": []
+      "gallery": [
+        "https://www.rehabshow.com.cn/staticsEn/default/static/images/gylz.png"
+      ]
     },
     {
       "name": "Haining International Fashion Socks Procurement Fair 2026",
@@ -8362,7 +8396,12 @@
       "venue": "Zhengzhou International Convention and Exhibition Center",
       "image_url": null,
       "official_url": "http://www.lianchonghui.cn/",
-      "gallery": []
+      "gallery": [
+        "http://www.lianchonghui.cn/uploads/allimg/20260309/1-2603091I201P6.jpg",
+        "http://www.lianchonghui.cn/uploads/allimg/20260128/1-26012P95UA19.jpg",
+        "http://www.lianchonghui.cn/uploads/allimg/20260128/1-26012Q00610948.jpg",
+        "http://www.lianchonghui.cn/uploads/allimg/20260128/1-26012Q01125450.jpg"
+      ]
     },
     {
       "name": "Chongqing World Pet Expo (GWPF) 2026",
@@ -9139,7 +9178,12 @@
       "venue": "Shenzhen Convention and Exhibition Center",
       "image_url": null,
       "official_url": "http://www.ieaechina.com/",
-      "gallery": []
+      "gallery": [
+        "http://www.ieaechina.com/static/upload/image/20260302/1772442515825976.png",
+        "http://www.ieaechina.com/static/upload/image/20260713/1783941116551953.jpg",
+        "http://www.ieaechina.com/static/upload/image/20260302/1772446731608602.jpg",
+        "http://www.ieaechina.com/static/upload/image/20260430/1777518962501299.jpg"
+      ]
     },
     {
       "name": "Nanchang Hongwei World Pet Expo 2026",
