@@ -392,23 +392,40 @@ def fetch_gallery(context, official_url, max_images=4, max_candidates=10):
     return good
 
 
+# Bump this whenever the photo-filtering logic changes, so previously
+# cached galleries (picked before the improvement existed) get thrown out
+# and re-fetched with the current logic, instead of being reused forever.
+GALLERY_FILTER_VERSION = 2
+
+
 def load_previous_official_urls(path="data/fairs.json"):
     """
     Reuses official_url and gallery values already fetched in a previous
     run, keyed by fair url, so we don't re-visit every fair's page (and
     every fair's separate official website) on every single run — only
     ones we haven't resolved yet.
+
+    The gallery cache is only reused if it was built with the current
+    GALLERY_FILTER_VERSION — otherwise every gallery gets re-fetched with
+    today's (presumably improved) filtering logic.
     """
     official_cache = {}
     gallery_cache = {}
     try:
         with open(path, "r", encoding="utf-8") as f:
             old_data = json.load(f)
+
         for fair in old_data.get("fairs", []):
             if fair.get("official_url"):
                 official_cache[fair["url"]] = fair["official_url"]
-            if fair.get("gallery"):
-                gallery_cache[fair["url"]] = fair["gallery"]
+
+        if old_data.get("gallery_filter_version") == GALLERY_FILTER_VERSION:
+            for fair in old_data.get("fairs", []):
+                if fair.get("gallery"):
+                    gallery_cache[fair["url"]] = fair["gallery"]
+        else:
+            print("Gallery filter logic has changed since the last run — "
+                  "re-checking all photos instead of reusing old ones.")
     except (FileNotFoundError, json.JSONDecodeError):
         pass
     return official_cache, gallery_cache
@@ -441,6 +458,7 @@ def main():
         "last_updated": datetime.now(timezone.utc).isoformat(),
         "range": f"{start_str}..{end_str}",
         "source_url": search_url,
+        "gallery_filter_version": GALLERY_FILTER_VERSION,
         "fairs": fairs,
     }
 
